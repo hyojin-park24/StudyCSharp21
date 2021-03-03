@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chap13App", "Chap13App\Chap13App.csproj", "{CC994CC9-8C63-4D1C-AA61-9139738388AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelegateChainApp", "DelegateChainApp\DelegateChainApp.csproj", "{1CDFF1A0-FA3F-4686-B733-CC5A4ABA34C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DelegateChainApp", "DelegateChainApp\DelegateChainApp.csproj", "{1CDFF1A0-FA3F-4686-B733-CC5A4ABA34C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsingEventApp", "UsingEventApp\UsingEventApp.csproj", "{9DF003B5-E0D9-4754-85A7-D254065EBCE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallBackTestApp", "CallBackTestApp\CallBackTestApp.csproj", "{535977ED-5712-4105-AD81-77183F777787}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{1CDFF1A0-FA3F-4686-B733-CC5A4ABA34C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CDFF1A0-FA3F-4686-B733-CC5A4ABA34C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CDFF1A0-FA3F-4686-B733-CC5A4ABA34C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DF003B5-E0D9-4754-85A7-D254065EBCE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DF003B5-E0D9-4754-85A7-D254065EBCE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DF003B5-E0D9-4754-85A7-D254065EBCE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DF003B5-E0D9-4754-85A7-D254065EBCE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{535977ED-5712-4105-AD81-77183F777787}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{535977ED-5712-4105-AD81-77183F777787}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{535977ED-5712-4105-AD81-77183F777787}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{535977ED-5712-4105-AD81-77183F777787}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

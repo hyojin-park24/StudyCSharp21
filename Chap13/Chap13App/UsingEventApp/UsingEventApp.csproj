@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{535977ED-5712-4105-AD81-77183F777787}</ProjectGuid>
+    <ProjectGuid>{9DF003B5-E0D9-4754-85A7-D254065EBCE6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CallBackTestApp</RootNamespace>
-    <AssemblyName>CallBackTestApp</AssemblyName>
+    <RootNamespace>UsingEventApp</RootNamespace>
+    <AssemblyName>UsingEventApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
