@@ -30,7 +30,7 @@
 + Null | 값이 아닌 값 "아무리 생각해도 난 NULL을~♬"   
 ---
 
-### 1-3) C#데이터 형식   
+### 1-3) C#데이터 형식 : 데이터 
 + 기본 데이터 형식
 + 변수, 상수, 열거형
 + 복합 데이터 형식
@@ -194,23 +194,23 @@ namespace OverflowTestApp
 
 ### 1-4) 연산자   
 + 산술 연산자
-   + ' +, -, *, /, % '  
+   +  +, -, *, /, %   
 + 할당 연산자   
-   + ' =, +=, -=, *=, /=, %= '   
+   +  =, +=, -=, *=, /=, %=   
 + 증감 연산자   
-   + ' ++, -- '   
+   +  ++, --    
 + 논리 연산자   
-   + ' && (And), || (Or), | (Not) '   
+   +  && (And), || (Or), | (Not)    
 + 관계/비교 연산자   
-   + ' <, >, ==, !=, >=, <= '   
+   +  <, >, ==, !=, >=, <=    
 + 비트 연산자   
-   + ' & (And), | (Or), ^ (XOr) '   
+   +  & (And), | (Or), ^ (XOr)    
    + 비트 내에서의 연산   
 + Shift 연산자   
-   + ' >>, << '   
+   +  >>, <<    
    + 값을 이동시킬 수 있는 연산   
 + 조건 연산자   
-   + ' ?, ??'   
+   +  ?, ??   
 
 **<연산자>**   
 
@@ -354,9 +354,1812 @@ namespace ArrayListApp
     }
 }
 ```
-**코드 예제 결과 값**
+**<코드 예제 결과 값>**
 
-![결과1](/Media/ArrayTest.png "배열 ")  
+![결과1](/Media/ArrayTest.png "배열 ")   
+
+**알아두면 좋은 Array 클래스의 주요 메소드와 프로퍼티**   
+
++ 정적 메소드   
+   + FindIndex<T>()   
+         
+      + 배열에서 지정한 조건에 부함하는 첫 번째 요소의 인덱스를 반환   
+   + Resize<t>()    
+     
+      + 배열의 크기를 조정   
+   + Clear()   
+      + 배열의 모든 요소를 초기화   
+   + ForEach<T>()   
+      
+      + 배열의 모든 요소에 대해 동일한 작업을 수행하게 함   
+
++ 인스턴스 메소드   
+   + GetLength()   
+      + 배열에서 지정한 차원의 길이를 반환   
+
++ 프로퍼티   
+   + Length   
+      + 배열의 길이를 반환   
+   + Rank   
+      + 배열의 차원을 반환   
+ 
+**Arrat Code Example**   
+```ruby   
+ class Program
+    {
+        static void Main(string[] args)
+        {
+            ArrayList array = new ArrayList( new[] { 80,74,81,90,34});
+
+            var loc = array.IndexOf(81);
+            array.Insert(loc, 50);
+
+            Console.WriteLine("81위치에 50추가");
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+            Console.WriteLine("90 삭제");
+            loc = array.IndexOf(90);
+
+            array.RemoveAt(4);
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            Console.WriteLine("정렬");
+            array.Sort(); // 정렬
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+        }
+    }   
+```   
+
+```ruby   
+static void Main(string[] args)
+        {
+            int[,] arr = new int[2, 3];
+            arr[0, 0] = 1;
+            arr[0, 1] = 2;
+            arr[0, 2] = 3;
+            arr[1, 0] = 4;
+            arr[1, 1] = 5;
+            arr[1, 2] = 6;
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+                    Console.Write($"[{i} ,{j} ] : {arr[i,j]}\t");
+                }
+
+                Console.WriteLine("");
+            }
+        }   
+```   
+
+---
+
+### 1-6) 코드 흐름의 제어   
+
+```
+프로그램의 흐름에 따라 제어할 수 있는 코딩이 존재한다   
+```
+
++ 조건문     
++ 반복문   
++ 점프문   
+
+### (1) 조건문 {if, else, switch}   
+
+#### (1-1) if ~ else문  "만약에~ 그렇지 않으면"   
+```ruby
+namespace Chap05
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.Write("수를 입력하세요 : ");
+                string line = Console.ReadLine(); // 콘솔에서 입력값을 변수에 넣기 (할당)
+
+                if(line == "quit") break; // quit 입력하면 프로그램 종료.
+
+                int number = 0;
+                int.TryParse(line, out number);  //int.Parse(line);
+                //Console.WriteLine(number);
+                //todo 아래 로직을 수정하세요
+                if (number > 0 )
+                {
+                    if (number % 2 == 0)
+                        Console.WriteLine("0보다 큰 짝수");
+                    else
+                        Console.WriteLine("0보다 큰 홀수");
+
+                }
+                else
+                {
+                    Console.WriteLine("0보다 작은 수");
+                }
+                // todo 마지막 
+            }
+
+            Console.WriteLine("계산종료!");
+        }
+    }
+}
+```   
+**<if문 결과값>**   
+
+![결과2](/Media/IfTestApp.png "if문")    
+
+#### (1-2) switch, Label, Break
+```
+여러개 조건식의 결과를 검사한 후 프로그램의 흐름을 나눔
+```
+
+```ruby
+namespace SwitchTestApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.Write("요일을 입력하세요 : ");
+                string line = Console.ReadLine(); // 콘솔에서 입력값을 변수에 넣기 (할당)
+
+                if (line == "quit") break; // quit 입력하면 프로그램 종료.
+                string day = line;
+
+                /*if ( day == "월요일" )
+                {
+                    Console.WriteLine("월요일 입니다.");
+                }
+                else if (day == "화요일")
+                {
+                    Console.WriteLine("화요일 입니다.");
+                }
+                else if (day == "수요일")
+                {
+                    Console.WriteLine("수요일 입니다.");
+                }
+                else if (day == "목요일")
+                {
+                    Console.WriteLine("목요일 입니다.");
+                }
+                else if (day == "금요일")
+                {
+                    Console.WriteLine("금요일 입니다.");
+                }
+                else if (day == "토요일")
+                {
+                    Console.WriteLine("토요일 입니다.");
+                }
+                else if (day == "일요일")
+                {
+                    Console.WriteLine("일요일 입니다.");
+                }
+                else
+                {
+                    Console.WriteLine("요일이 아닙니다.");
+                }*/
+
+                switch (day)
+                {
+                    case "월요일":
+                        Console.WriteLine("월요일 입니다.");
+                        break;
+                    case "화요일":
+                        Console.WriteLine("화요일 입니다.");
+                        break;
+                    case "수요일":
+                        Console.WriteLine("수요일 입니다.");
+                        break;
+                    case "목요일":
+                        Console.WriteLine("목요일 입니다.");
+                        break;
+                    case "금요일":
+                        Console.WriteLine("금요일 입니다.");
+                        break;
+                    case "토요일":
+                        Console.WriteLine("토요일 입니다.");
+                        break;
+                    case "일요일":
+                        Console.WriteLine("일요일 입니다.");
+                        break;
+                    default:
+                        Console.WriteLine("요일이 아닙니다.");
+                        break;
+                        //if . else if. 문을 switch문으로 바꿀 수 있음 
+                }
+
+                Console.WriteLine("계산종료!");
+            }
+        }
+    }
+}
+```   
+
+**<switch문 결과값>**   
+
+![결과3](/Media/SwitchTestApp.png "switch문 ")     
+
+### (2) 반복문 {While, do, for, foreach}    
+
+#### (2-1) While문 "값이 참일 때, 동안 반복할거야!"   
++ if문과 마찬가지로 true 또는 false가 반환되어야 함   
++ while문의 특징은 조건식이 참일 때 계속해서 반복하여 코드를 실행함    
++ 조건식이 거짓이 되면 루프를 빠져나옴   
+
+**While문의 기본 형태**
+```   
+while (조건식) 
+{
+   //반복 실행될 코드
+}   
+```   
+
+#### (2-2) do While문 "먼저 한번 실행 후 반복할거야!"   
+```
+do while 문의 주의사항!!   
+조건식을 만족하든 만족하지 않든 반드시 한번은 실행이 됨!
+```   
+
+**do while문의 기본 형태**   
+```
+do 
+{
+   //반복 실행될 코드
+}   
+while 
+(조건식);   
+```   
+
+#### (2-3) For문 "값이 참이될 때 까지 반복할거야!"   
++ while문과 큰 차이점은 없음   
++ for문이 확실히 코딩하기 간편함   
++ 초기식에는 반복을 실행하기 전 사용될 **변수를 초기화** 해야함   
+
+**for문의 기본 형태**   
+```
+for(초기식; 조건식; 증감식;)
+{
+   //반복해서 실행될 코드
+}
+```   
+
+#### (2-4) Foreach 문 "순화하며 차례대로 접근할거야!"   
+
++ 배열이나 컬렉션에서 주로 사용됨   
++ 여러개의 변수를 한 곳에 가져다가 붙인 형태   
+
+**Foreach문의 기본 형태**   
+```
+foreach (변수 in 배열 혹은 컬렉션)
+{
+   //실행될 코드
+}
+```   
+
+**Foreach문 코드 예제**   
+```ruby   
+namespace ForeachTestApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] sources = { 1, 2, 3, 4, 5, 3, 6, 7, 8, 9, 10 };
+
+           //for
+            for (int i = 0; i < sources.Length; i++)
+            {
+                Console.WriteLine($"sources[i] = {sources[i]}");
+            }
+            //foreach
+            Console.WriteLine("Foreach문");
+            var idx = 0;
+            foreach(var item in sources)
+            {
+                Console.WriteLine($"sources = { item}");
+            }
+        }
+    }
+}   
+```   
+
+#### (2-5) 반복문의 중첩 : 구구단    
+
+**for문의 중첩**   
+```
+static void Main(string[] args)
+{ 
+   for (int a = 2; a < 10; a++) 
+      {
+         for (int b = 1; b < 10; b++) 
+            {
+               Console.WriteLine("{0} * {1} = {2}", a, b, a * b);
+            } 
+      }
+}   
+```   
+
+**<구구단 결과 값>**   
+
+![결과4](/Media/Foreach.png "구구단 ")   
+
+
+### (3) 무한 루프와 제어문 {Infinite, Continue, Break, Goto}   
+
+#### (3-1) 무한 루프 (Infinite loop)   
+
++ 종료문을 만나지 못하고 끝없이 동작하는 것   
++ 특정 문자가 입력되면 루프를 종료할 수 있음   
+
+**무한 루프 기본 형태**   
+```
+while (true)
+{
+   // 값이 참이면 무한루프 시작
+   //실행될 코드
+}
+```   
+
+**Infinite loop 코드 예제**   
+```ruby
+namespace InfiniteLoopApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello World!"); 
+
+            long idx = 0;
+            for (; ; )//무한루프
+            {
+                Console.WriteLine($"idx = {idx++}");
+            }
+        }
+    }
+}
+```   
+
+#### (3-2) Break      
+
+```
+switch문에서 빠져나오기 위하거나 무한루프에서 빠져나오기 위해 사용됨   
+```   
+
+#### (3-3) Continue   
+
+```
+▶ 조건을 검사하는 부분으로 넘어가서 반복을 계속 수행하는 역할   
+▶ continue를 만나면 바로 조건 검사부분으로 넘어감   
+▶ 한번 쉬고 계속 반복을 진행   
+```   
+
+#### (3-4) Goto   
+
+```
+Goto는 해당 레이블로 뛰어넘어버리는 기능   
+``` 
+
+**Goto 기본 형태**   
+```
+...
+goto 레이블;   
+
+...
+레이블 :   
+   //실행될 코드   
+...   
+```   
+
+---   
+
+## 2. C# 객체지향 문법   
+
+```
+클래스 / 캡슐화 / 상속 / 다향성 / C#클래스 확장 / 멤버 유형 확장   
+```   
+
+### 2-1) Class  
+
+#### (1) 클래스란?   
+**코드 내의 모든 것을 객체로 표현하려는 패러다임**   
+   + 객체(Object) : 세상의 모든 것을 지칭   
+
++ 객체의 표현   
+   + 속성 : 데이터   
+   + 기능 : 메소드   
+
++ 클래스 : 객체를 만들기 위한 청사진   
+   + Ex) int a = 30;   
+      + int : 클래스, 청사진   
+      + a : 객체, int의 실체   
+
+#### (2) 클래스의 선언과 객체 생성   
+
+**클래스 선언 기본 형태**   
+```
+class 클래스 이름   
+{
+   //데이터와 메소드
+}   
+```   
+
+#### (3) 생성자와 종료자   
+
++ 객체를 만드는 생성자   
+   + 클래스와 같은 이름
+   + 반환 형식 없음   
+
++ 객체를 파괴하는 종료자   
+   + 클래스 이름 앞에 ~ 를 붙인 형태
+   + 매게변수 X , 한정자 X   
+   + 오버로딩 불가능   
+   + 직접 호출할 수 없음   
+
+**생성자와  코드 예제**   
+```ruby   
+class ObjectTest
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("객체사용");
+
+            /*cat cat1 = new cat(); //고양이 객체의 실체(instance) 생성
+            cat1.Name = "야옹이";
+            cat1.Color = "흰색";
+            cat1.Meow();
+            cat kitty = new cat();
+            kitty.Name = "헬로키티";
+            kitty.Color = "하얀색";
+            kitty.Meow();
+            cat nero = new cat();
+            nero.Name = "검은 고양이 네로";
+            nero.Color = "검은색";
+            nero.Meow();*/
+
+            cat yomi = new cat("요미", "흰색", "암컷");
+            yomi.Meow();
+
+        }
+    }
+
+    class cat //객체
+    {
+        public cat() { }
+
+        public cat(string Name)
+        {
+            this.Name = Name; //this : 객체 자기 자신
+        }
+
+        public cat(string Name, string Color) : this(Name) //사용자 정의 생성자
+        {
+            this.Color = Color;
+        }
+
+        public cat(string Name, string Color, string Gender) : this(Name, Color)
+        {
+            this.Gender = Gender;
+        }
+
+        //속성, 특성, 변수
+        public string Name; //이름
+        public string Color; //색상
+        public string Gender; //성별
+
+        //행위, 기능, 메소드
+        public void Meow()
+        {
+            Console.WriteLine($"{this.Name}(색상 {this.Color} / 성별 {this.Gender}) : 야옹!");
+        }
+    }   
+```   
+
+#### (3) 정적 필드와 정적 메소드   
+
++ static은 메소드나 필드가 클래스 자체에 소속되도록 지정하는 한정자   
++ 인스턴스 소속 필드 VS 클래스 소속 필드   
+   + 클래스 소속된 필드 (Static) : 인스턴스를 만들지 않고 클래스의 이름을 통해 필드에 직접 접근   
++ 프로그램 전체에 공유 하는 변수에 사용함   
+
+**정적 필드,메소드 사용 코드 예제**   
+```ruby   
+ class TestClass
+    {
+        public static int number;
+        public float fnum;
+
+        public static float ProcSomething()
+        {
+            Console.WriteLine($"{number}, 먼가를 한다.");
+            return 1.0f;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            TestClass aCls = new TestClass();
+            TestClass.number = 10;
+            aCls.fnum = 3.25f;
+
+            TestClass bCls = new TestClass();
+            bCls.fnum = 4.87f;
+
+            TestClass.ProcSomething();
+        }
+
+
+    }   
+```   
+
+#### (4) 객체 복사하기 : 얕은 복사 / 깊은 복사   
+
+#### (5) 객체 자신을 지칭하는 This   
++ 객체 내부에서 자신의 필드나 메소드에 접근할 때 사용   
+
+#### (6) 은닉성 (캡슐화)의 구현   
++ 감추고 싶은 것은 감추고, 보여주고 싶은 것만 보여줌   
+
+**은닉성 코드 예제**   
+```ruby   
+namespace AccessModiFierTestApp
+
+{   //접근 제한, 정보은닉 처리
+    class Boiler
+    {
+        internal int temp = 5; //물 온도 //public>[protecte>private : 접근제한],internal (빈도 낮음)
+
+        public void SetTemp(int temp)
+        {
+            if (temp < 30 || temp > 60) 
+            {
+                Console.WriteLine("물의 온도가 일정온도를 벗어났습니다.59℃ 맞춥니다.");
+                this.temp = 59;
+                return;
+            } else
+            {
+                this.temp = temp; //온도 지정
+            }
+            
+        }
+
+        public int GetTemp(){
+            return this.temp;
+        }
+
+        public void TurnOnBoiler() {
+            Console.WriteLine("보일러를 켭니다.");
+        }
+
+        public void TurnOffBoiler() {
+            Console.WriteLine("보일러를 끕니다."); 
+        }
+    }
+    class MainApp
+    {
+        static void Main(string[] args)
+        {
+            Boiler kiitturami = new Boiler();
+            var currTemp = kiitturami.GetTemp ();
+            Console.WriteLine($"현재온도는 {currTemp}℃ 입니다.");
+            kiitturami.SetTemp(40);
+            kiitturami.TurnOnBoiler();
+            kiitturami.SetTemp(59);
+
+            if (kiitturami.GetTemp() >= 59)
+            {
+                kiitturami.TurnOffBoiler();
+            }
+        }
+    }
+}   
+```   
+
+#### (7) Class 상속   
+
++ 부모 클래스와 자식 클래스 관계 파악 중요   
+
+**상속 코드 예제**   
+```ruby   
+namespace InheritTestApp
+{
+    class Parent
+    {
+        protected string Name; // 부모 클래스의 속성 
+
+        public Parent(string Name)
+        {
+            this.Name = Name; //Name 초기화
+            Console.WriteLine($"{this.Name}Parent() 생성자"); //this Name에 parent를 생성하겠음
+        }
+
+        public void ParentMethod()
+        {
+            //...
+            Console.WriteLine($"{this.Name}.ParentMethod() 실행");
+        }
+    }
+
+    // 자식클래스 만들게 (부모클래스 상속할거야)
+    class Child : Parent
+    {
+        public String Color; //색상
+
+
+        public Child(string Name) : base(Name)
+        {
+            Console.WriteLine($"{this.Name}.Child() 생성자");
+        }
+
+        public void ChildMethod()
+        {
+            Console.WriteLine($"{this.Name}.ChildMethod() 실행");
+        }
+
+        public void Getcolor()
+        {
+            Console.WriteLine($"{this.Name}의 색상 {this.Color}");
+        }
+    }
+    class MainApp
+    {
+        static void Main(string[] args)
+        {
+            Parent p = new Parent(" 부모 ");
+            p.ParentMethod(); // 부모클래스 메서드 실행
+
+            Child c = new Child("자식");
+            c.ParentMethod(); //부모의 메서드 실행
+            c.ChildMethod(); //자식 클래스 메서드 실행
+            c.Color = "황색";
+            c.Getcolor();
+
+        }
+    }
+}
+```   
+
+#### (8) 기반클래스와 파생클래스 사이의 형식 "Welcome Zoom!"   
++ 기반클래스와 파생클래스 사이에 족보를 오르내리는 형식 변환 가능   
++ 자식클래스가 부모클래스의 인스턴스로 사용 가능   
++ 코드 수정 시 클래스 기반 내 필요한 작업   
+
+**Zoom Code Example**   
+```ruby  
+namespace NewOverrideTestApp
+{
+    class Mammal //포유류
+    {
+        public string Name { get; set; }
+
+        public void Breathe()
+        {
+            Console.WriteLine($"{this.Name}이(가) 숨을 쉰다.");
+        }
+
+        /*public void Move()
+        {
+            Console.WriteLine($"{this.Name}이(가) 이동한다.");
+        }*/
+
+        public virtual void Move()
+        {
+            Console.WriteLine($"(부모작업){this.Name}이(가) 이동한다.");
+        }
+    }
+
+    class Dog : Mammal
+    {
+        /* public void Move()
+         {
+             Console.WriteLine($"{this.Name}이(가) 네 발로 달린다.");
+         }
+ */
+
+        public override void Move()
+        {
+            base.Move(); //부모에 있는 Move 실행
+            Console.WriteLine($"{this.Name}이(가) 네 발로 달린다."); //+alpha 실행
+        }
+    }
+
+    class Huamn : Mammal
+    {
+        public new void Move()
+        {
+            //부모의 메서드 숨긴다
+            Console.WriteLine($"{this.Name}이(가) 두 발로 움직인다.");
+        }
+    }
+
+    class Whale : Mammal //고래
+    {
+        public override void Move()
+        {//부모의 메서드를 재정의 
+            Console.WriteLine($"{this.Name}이(가) 지느러미로 헤엄친다.");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dog ppopi = new Dog();
+            ppopi.Name = "뽀삐";
+            ppopi.Move();
+
+            Huamn Edun = new Huamn();
+            Edun.Name = "Edun";
+            Edun.Move();
+
+            Whale whale = new Whale();
+            whale.Name = "고래";
+            whale.Move();
+        }
+    }
+}
+```   
+
+#### (9) is와 as {C#의 형 변환 연산자}   
+
++ is   
+   + 객체가 해당 형식에 해당하는 검사 후 bool값으로 변환   
++ as   
+   + 형식 변환 연산자와 같은 역할   
+   + 참조 형식에만 사용   
+   + 변환에 실해시, 객체 참조를 null로 만듦   
+
+**TypeCasting Code Example**   
+```ruby   
+namespace ClassTypeCastApp
+{ //형변환
+    class 포유류
+    {
+        public void 키우다 ()
+        {
+            Console.WriteLine("키우다()");
+        }
+    }
+
+    class 강아지 : 포유류
+    {
+        public void 멍멍()
+        {
+            Console.WriteLine("멍멍!");
+        }
+    }
+
+    class 고양이 : 포유류
+    {
+        public void 야옹()
+        {
+            Console.WriteLine("야옹!");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            포유류 _포유류 = new 포유류();
+            _포유류.키우다();
+
+            // 자식이 부모클래스로 변환 [묵시적 변환]
+            _포유류 = new 강아지();
+            _포유류.키우다();
+            강아지 쭈쭈;
+
+            if (_포유류 is 강아지)
+            {
+                쭈쭈 = _포유류 as 강아지;
+                쭈쭈.멍멍();
+            }
+
+            /*_포유류 = new 고양이();
+            _포유류.키우다();
+            _포유류.야옹(); => 에러*/
+
+
+
+            // [명시적 변환]부모가 자식클래스로 변환 : 들어간다라고 자식을 불러줘야함
+            // 근데 명시적 변환은 쓸모 없음. 실행자체가 안됨.
+            강아지 뽀삐 = null;
+                if (뽀삐 is 포유류)
+            {
+                Console.WriteLine("이 부분이 실행됩니다.");
+                뽀삐 = new 포유류() as 강아지;
+                뽀삐.키우다();
+                뽀삐.멍멍();
+            }
+          
+            /*고양이 로미 = (고양이) new 포유류();
+            로미.키우다();
+            로미.야옹();*/
+
+        }
+    }
+}   
+```   
+
+#### (10) Tuple    
++ 여러 필드를 담을 수 있는 구조체   
+   + 형식의 이름을 갖지 않음   
+    + 임시적으로 사용할 복합 데이터 형식 선언에 적합
+```ruby
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            var tuple1 = (1, "박효진", "010-8845-2413", "김해시 계동로", true);
+
+            var tuple2 = (Idx: 2, Name: "홍길동", Phone: "010-9999-9999", Address: "경남 창원시 의창구", Marrige: false);
+
+            Console.WriteLine($"{tuple1.Item1} / {tuple1.Item2} / {tuple1.Item3} / {tuple1.Item4} / {tuple1.Item5}");
+            Console.WriteLine($"{tuple2.Item1} / {tuple2.Item2} / {tuple2.Item3} / {tuple2.Item4} / {tuple2.Item5}");
+            Console.WriteLine($"{tuple2.Idx} / {tuple2.Name} / {tuple2.Phone} / {tuple2.Address} / {tuple2.Marrige}");
+        }
+    }   
+```   
+
+#### (11) Class VS Struct(구조체)   
++ Class   
+   + 참조 형식
+   + 얕은 복사 (Shallow Copy)   
+   + new 연산자와 생성자 필요   
+   + 매개 변수 없는 생성자 선언 가능   
+   + 상속 가능   
+
++ Struct   
+   + 값 형식   
+   + 깊은 복사 (Deep Copy)   
+   + 선언 만으로도 생성 가능   
+   + 매개 변수 없는 생성자 선언 불가능   
+   + 모든 구조체는 System.Object형식을 상속하는    
+      System.Value Type으로부터 직접 상속 받음   
+      
+#### (12) 한 눈에 정리하는 Class 예제!   
+```ruby   
+public class MyCustomer
+{
+    // 필드
+    private string name;
+    private int age;
+
+    // 이벤트 
+    public event EventHandler NameChanged;
+
+    // 생성자 (Constructor)
+    public MyCustomer()
+    {
+        name = string.Empty;
+        age = -1;
+    }
+
+    // 속성
+    public string Name
+    {
+        get { return this.name; }
+        set 
+        {
+            if (this.name != value)
+            {
+                this.name = value;
+                if (NameChanged != null)
+                {
+                    NameChanged(this, EventArgs.Empty);
+                }
+            }                
+        }
+    }
+    public int Age
+    {
+        get { return this.age; }
+        set { this.age = value; }
+    }
+
+    // 메서드
+    public string GetCustomerData()
+    {
+        string data = string.Format("Name: {0} (Age: {1})", 
+                    this.Name, this.Age);
+        return data;
+    }
+}   
+```   
+
+---   
+
+### 2-2) 인터페이스와 추상 클래스   
+
++ 인터페이스   
+   + 인터페이스는 클래스가 따라야 하는 **약속** 이다   
+   + Class는 자기자신을 상속하지 못하기에 쓰이는 인터페이스
+   + 인터페이스를 상속하느 인터페이스   
+      + 기존 인터페이스에 새로운 기능을 추가한 인터페이스를 만들고 싶을 때   
+      + 필요한 인터페이스가 어셈블리로만 제공되는 경우   
+      + 필요한 인터페이스를 상속한 클래스가 있는 경우   
+
++ 추상 클래스   
+   + 구현을 가지되 인스턴스는 갖지 못함   
+   + 클래스의 접근성에 사용됨   
+   + 다른 추상클래스 상속 가능   
+      + 자식 추상 클래스에서 부모의 추상 메소드 구현의무는 없음   
+
+**인터페이스와 추상 클래스 코드 예제**   
+```ruby
+namespace InterfaceTestApp
+{
+    /*class Ridable //탈것
+    {
+        public void Ride()
+        {
+            Console.WriteLine("탈 것!");
+        }
+    }*/
+
+    interface ICar
+    {
+        void Run();
+        void Ride();
+    }
+
+    interface IPlane
+    {
+        void Fly();
+
+        void Ride();
+
+    }
+
+    class DroneCar : IPlane, ICar
+    {
+        public void Fly()
+        {
+            Console.WriteLine("드론카 날다!");
+        }
+
+        public void Ride()
+        {
+            Run();
+            Fly();
+        }
+
+        public void Run()
+        {
+            Console.WriteLine("드론카 달리다!");
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            DroneCar dreamCar = new DroneCar();
+            dreamCar.Ride();
+        }
+
+    }
+}
+```   
+
+```ruby   
+namespace LoggerTestApp
+{
+    interface ILogger
+    {
+        void WriteLog(string message);
+    }
+
+    class ConsoleLogger : ILogger
+    {
+        public void WriteLog(string message)
+        {
+            Console.WriteLine($"{DateTime.Now} : {message}");
+        }
+    }
+
+    interface IFormattableLogger : ILogger    // 인터페이스의 상속 
+    {
+         void WriteLog(string format, params object[] args);
+    }
+
+    class ConsoleformatLogger : IFormattableLogger
+    {
+        public void WriteLog(string format, params object[] args)
+        {
+            string message = String.Format(format, args);
+            Console.WriteLine($"{DateTime.Now.ToLocalTime()} / {message}");
+        }
+
+        public void WriteLog(string message)
+        {
+            Console.WriteLine($"{DateTime.Now.ToLocalTime()} / {message}");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("ConsoleLogger");
+            ConsoleLogger logger = new ConsoleLogger();
+            logger.WriteLog("로그메시지");
+
+            IFormattableLogger logger2 = new ConsoleformatLogger();
+            logger2.WriteLog("{0} * {1} = {2}", 3, 4, 12);
+        }
+    }
+}
+```   
+
+```ruby   
+namespace MultiInterfaceApp
+{
+    interface IRunnable // 자동차 종류
+    {
+        void Run();
+    }
+
+    interface IFlyable // 비행기 종류
+    {
+        void Fly();
+    }
+
+    class DroneCar : IRunnable, IFlyable
+    {
+        public void Fly()
+        {
+            Console.WriteLine("날아가자!");
+        }
+
+        public void Run()
+        {
+            Console.WriteLine("달리자!");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("드론카!");
+
+            DroneCar DreamCar = new DroneCar();
+            DreamCar.Run();
+            DreamCar.Fly();
+
+            Console.WriteLine("자동차로 변경 (interface)");
+            IRunnable car = DreamCar as IRunnable;
+            car.Run();
+            //car.Fly(); //erro
+
+            Console.WriteLine("비행기로 변경(interface)");
+            IFlyable plane = DreamCar;
+            plane.Fly();
+            //plane.Run();//erro
+
+        }
+    }
+}    
+```   
+
+---
+
+### 2-3) 메소드 (Method)   
+
+#### (1) 메소드 (Method)   
+
++ 메소드란?   
+   : 일련의 코드를 하나의 이름 아래 묶은 것     
+      + C와 C++의 함수와 비슷한 기능   
+      + 클래스 내에서 일련의 코드 블럭을 실행시키는 함수   
+      + 0 ~ N개의 인수를 가지고 있음   
+      + 하나의 리턴 값을 가지고 있음   
+      + 리턴 값이 없으면 리턴 타입을 void로 표시      
+
++ 메소드의 접근 지정자   
+   + private   
+   + public   
+   + protected   
+      + 접근 가능한 범위를 지정   
+      
+**메소드 기본 예제**   
+```
+ class Calculator
+    {
+        static void Main(string[] args)
+        {
+            int x = Calculator.Plus(3, 4);
+            int y = Calculator.Plus(5, 6);
+            int z = Calculator.Plus(7, 8);
+
+            int result = x + y + z;
+            Console.WriteLine($"결과는 {result}");
+        }
+
+        private static int Plus(int p1, int p2)
+        {
+            // throw new NotImplementedException();
+            Console.WriteLine($"Input : {p1}, {p2}");
+            int result = p1 + p2;
+            Console.WriteLine($"Output : {result}");
+            return result;
+        }
+    }   
+```   
+
+#### (2) Ref와 Out   
+
++ ref   
+   + 변수값을 그대로 전달 X → 변수의 메모리 주소를 전달 O   
+   + 변수를 전달하기 전 초기화 해야함   
+   
++ out   
+   + ref와 비슷하게 인수를 참조로 전달할 때 사용   
+   + 초기화 하지 않고도 전달 가능   
+
+**Ref와 Out 코드 예제**   
+```ruby   
+  class Program
+    {
+        static void Main(string[] args)
+        {
+            int a = 22, b = 3;
+            int val = 0;
+            int rem = 0;
+            Divide(a, b, out val, out rem);
+
+            Console.WriteLine($"{a},{b} : a/b = {val}, a%b = {rem} ");
+
+            bool isSucced = int.TryParse("1000.74", out int result);
+            Console.WriteLine($"변환결과{isSucced} , result값 {result}");
+            
+
+        }
+
+        static void Divide(int a, int b, out int quotient, out int remainder)
+        {
+            quotient = a / b;
+            remainder = a % b;
+        }
+    }   
+```   
+
+#### (3) 메소드 오버로딩   
+
++ 하나의 메소드 이름에 여러 개의 구현을 올리는 것   
++ 매개 변수의 수와 형식을 분석해 호출할 메소드 결정   
++ 이름에 대한 고민을 덜어줌   
++ 코드의 일관성을 제공   
++ 똑같은 메소드 명에 매개변수에 따라 호출되는 메소드가 다름   
+
+**오버로딩 메소드 기본 예제**   
+```
+class Calculator
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("계산기!");
+
+            int x = Calculator.Plus(3,4);
+            Console.WriteLine($"3 + 4 = {x}");
+
+            float y = Calculator.Plus(3.14f, 5.6f);
+            Console.WriteLine($"3.14 + 5.6 = {y}");
+            Console.WriteLine($"3.14 + 5.6 = {Calculator.Plus(3.14, 5.6)}");
+            Console.WriteLine($"3.14 + 5.6 = {Calculator.Plus(3.14, "5")}");
+            int z = Calculator.Plus(7,8,9);
+
+            
+            // [가변길이 매개변수]밑에것처럼 쓰면 매개변수 쓰기 짱 편해! 
+            int total = 0;
+            total = sum(1,2, 4, 8, 24);
+            Console.WriteLine($"합계는 {total}");
+            Console.WriteLine($"10까지의 합은 {sum(1,2,3,4,5,6,7,8,9,10)}");
+
+            int[] arrs = new int[] {1,2,3,4,5,6,7,8,9,10 };
+            Console.WriteLine($"10까지의 합은 {sum(arrs)}");
+        }
+
+        private static int Plus(int v1, int v2, int v3)
+        {
+            int result = v1 + v2 + v3;
+            return result;
+        }
+
+        private static int sum(params int [] args)
+        {
+            int result = 0;
+            foreach (var arg in args)
+            {
+                result += arg;
+            }
+            return result;
+        }
+
+
+        private static double Plus(double v1, string v2)
+        {
+            double.TryParse(v2, out double p2);
+            double result = v1 + p2;
+            return result;
+        }
+
+        private static double Plus(double v1, double v2)
+        {
+            double result = v1 + v2;
+            return result;
+        }
+
+        private static float Plus(float v1, float v2)
+        {
+            float result = v1 + v2;
+            return result;
+        }
+
+        private static int Plus(int v1, int v2)
+        {
+            int result = v1 + v2;
+            return result;
+        }
+    }
+    
+```   
+    
+#### (4) 명명된 매개변수와 선택적 매개변수   
+
+```ruby   
+ class Program
+    {
+        static void Main(string[] args)
+        {
+            PrintProfile("박효진", "010-8845-2413");
+
+           if( PrintProfile(null, "010-1111-2222") == -1);
+            {
+                Console.WriteLine("프로필 출력 시 오류가 발생했습니다.");
+            }
+
+            //[명명된 매개변수 - "",] 가독성에 짱 좋음!
+            /*PrintProfile(phone:"010-1708-3826", name: "홍길동");
+            PrintProfile(name:"홍길순", phone : "010-2708-3878" );*/
+            
+            //[선택적 매개변수 ] 순서중요! 뒤에서부터 값이 입력이 되어야만 가능
+            PrintProfile("최백호");
+        }
+        public static int PrintProfile (string name, string phone = "010-8845-2413") // voide 쓸 때와 int 쓸 때와 다른 것을 인지해야 함
+        {    if (string.IsNullOrEmpty(name))
+            {
+                Console.WriteLine("이름을 정확히 입력하세요.");
+                return -1;
+            }
+
+            //프로필 출력
+            Console.WriteLine($"이름 : {name}, 폰 번호 : {phone}");
+            return 0;
+        }
+    }   
+```   
+
+#### (5) Swap메소드   
+   + 정렬할 때 쓰이는 메소드 
+   + DB의 ordeby, desc, esc와 같음   
+
+```ruby   
+class Program
+    {
+        static void Main(string[] args)
+        {
+            int x = 47, y = 5;
+            Console.WriteLine($"Before Swap {x},{y}");
+            Program.Swap(/*ref*/ x, /*ref*/ y); //정렬 기반
+
+            Console.WriteLine($"After Swap {x},{y}");
+        }
+
+        private static void Swap(/*ref*/ int p1, /*ref*/ int p2) //refurence : 주소 
+        // Swap 메소드 : 정렬할 때 쓰임 ( DB 의 orderby, desc, esc 와 같음) 
+        {
+            int temp = p1; // temp 47 이 들어온겨 
+            p1 = p2; // p1 = 5, p2 =5 
+            p2 = temp; // p2 = 47
+        }
+    }
+```   
+
+---   
+
+### 2-4) 프로퍼티 {캡슐화의 프로퍼티}   
+
+#### (1) 프로퍼티란?   
+
+**Public의 관대함**   
++ 할당연산자(=)를 이용한 필드 액세스의 간편함   
+   + 데이터의 오염 가능성이 높아짐!!!   
+
++ Get/SEt 메소드를 사용한 필드 은닉   
+   + 번거롭고 귀찮음!!   
+
+∴ 은닉성과 편의성 두마리 토끼를 다 잡는 방법 = **프로퍼티**   
+
+**프로퍼티 코드 예제**   
+```ruby   
+namespace PropertyTestApp
+{
+    class Myclass
+    {
+        private int iValue; // 0~120℃ 값만 입력받는 멤버 변수
+        private double dZeta;
+        private float fPng;
+        private string strVal;
+        private int inCode;
+
+        public int IValue 
+        {
+            get {
+                return this.iValue;
+            }
+            set {
+                if (value < 0)
+                    this.iValue = 0;
+                else if (value > 120)
+                    this.iValue = 120;
+                else
+                    this.iValue = value;
+                
+            }
+        }
+
+        public Myclass(int iValue)
+        {
+            IValue = iValue;
+            //this.SetValue (iValue);
+        }
+
+       /* public int GetValue()
+        {
+            return this.iValue;
+        }
+        public void SetValue(int iValue)
+        {
+            if (value < 0)
+            {
+                this.iValue = 0;
+            }
+            else if (iValue > 120)
+            {
+                this.iValue = 120;
+            }
+            else
+            {
+                this.iValue = iValue;
+            }
+        }*/
+
+        public void PrintValue()
+        {
+            Console.WriteLine($"값은 {this.iValue}");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Myclass myclass = new Myclass(1200);
+            myclass.PrintValue();
+
+            //myclass.SetValue(108);
+            myclass.IValue = 1200;
+            myclass.PrintValue();
+            //Console.WriteLine($"현재 온도는 {myclass.GetValue()}℃ 입니다.");
+            Console.WriteLine($"현재 온도는 {myclass.IValue}℃ 입니다.");
+        }
+    }
+}   
+```   
+
+#### (2) 자동 구현 프로퍼티   
+
++ 단순히 필드를 읽고 쓰기만 하는 경우에 사용  
++ 선언 동시에 초기화   
+
+**프로퍼티 최종 코드 예제***   
+
+```ruby   
+namespace PropertyTestApp2
+{
+    //생일정보 클래스
+    
+    class BirthdayInfo
+    {
+        private string name;
+        private DateTime birthday;
+
+        public string Name
+        {
+            get { return this.name; }
+            set { this.name = value; }
+        }
+
+        public DateTime Birthday
+        {
+            get { return this.birthday; }
+            set { this.birthday = value; }
+        }
+
+        public string GetName()
+        {
+            return this.name;
+        }
+
+        public void SetName(string name)
+        {
+            this.name = name;
+        }
+
+        public DateTime GetBirthday()
+        {
+            return this.birthday;
+        }
+
+        public void SetBirthday(DateTime birthday)
+        {
+            this.birthday = birthday;
+        }
+    }
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            BirthdayInfo info = new BirthdayInfo();
+            info.SetName("홍길동");
+            info.SetBirthday(new DateTime(1990,1,8));
+
+            Console.WriteLine($"이름 : {info.GetName()}");
+            Console.WriteLine($"생일 : {info.GetBirthday()}");
+
+            Console.WriteLine("프로퍼티 사용");
+
+            BirthdayInfo info2 = new BirthdayInfo();
+            info2.Name ="홍길순";
+            info2.Birthday= new DateTime(1992, 3, 26);
+
+            Console.WriteLine($"이름 : {info2.Name}");
+            Console.WriteLine($"생일 : {info2.Birthday}");
+        }
+    }
+}   
+```   
+
+### 2-2) 일반화 프로그래밍 - Generic과 실무사용 컬렉션   
+
+#### (1) 일반화 프로그래밍이란?   
++ 일반화   
+   + 특수한 개념으로 부터 공통된 개념을 찾아 묶는 것   
+
++ 일반화 프로그래밍   
+   + 일반화의 대상 - 데이터 형식   
+
+**일반화 프로그래밍 코드 예제**   
+
+```ruby   
+namespace Chap11App
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] source = { 11, 21, 33, 45, 56}; //5개 int 배열
+            int[] target = new int[source.Length]; //5개 int 배열 초기화
+
+            CopyArray(source, target);//int 배열 복사
+            Console.WriteLine("배열복사");
+            foreach (var item in target)
+            {
+                Console.WriteLine(item);
+            }
+
+            string[] source2 = { "하나", "둘", "셋", "넷", "다섯", "여섯"};
+            string[] target2 = new string[source2.Length];
+
+            CopyArray(source2, target2);
+            Console.WriteLine("strin 복사");
+            foreach (var item in target2)
+            {
+                Console.WriteLine(item);
+            }
+
+            float[] source3 = { 1.1f, 2.2f, 3.3f, 4.5f, 6.6f};
+            float[] target3 = new float[source3.Length];
+            Console.WriteLine("float 배열 복사");
+            foreach (var item in target3)
+            {
+                Console.WriteLine(item);
+            }
+        }
+
+        private static void CopyArray(string[] source2, string[] target2)
+        {
+            for (int i = 0; i < source2.Length; i++)
+            {
+                target2[i] = source2[i];
+            }
+        }
+
+        private static void CopyArray(int[] source, int[] target)
+        {
+            for (int i = 0; i < source.Length; i++)
+            {
+                target[i] = source[i];
+            }
+        }
+    }
+}   
+```   
+
+**Generic Code Example**   
+```ruby   
+
+namespace GenericClassApp
+{
+    class Array_Generic<T>
+    {
+        private T[] array;
+
+        public Array_Generic()
+        {
+            array = new T[10];
+        }
+
+        public T GetElement(int index) { return array[index]; }
+
+        public int Length
+        {
+            get { return array.Length; }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Array_Generic<int> array = new Array_Generic<int>();
+
+            Array_Generic<string> str = new Array_Generic<string>();
+        }
+    }
+}   
+```   
+
+**GenericCopyArray Code Example**   
+```ruby   
+ static void Main(string[] args)
+        {
+            int[] source = { 11, 21, 33, 45, 56 }; //5개 int 배열
+            int[] target = new int[source.Length]; //5개 int 배열 초기화
+
+            CopyArray(source, target);//int 배열 복사
+            Console.WriteLine("배열복사");
+            foreach (var item in target)
+            {
+                Console.WriteLine(item);
+            }
+
+            string[] source2 = { "하나", "둘", "셋", "넷", "다섯", "여섯" };
+            string[] target2 = new string[source2.Length];
+
+            CopyArray(source2, target2);
+            Console.WriteLine("strin 복사");
+            foreach (var item in target2)
+            {
+                Console.WriteLine(item);
+            }
+        }
+
+        private static void CopyArray<T>(T[] source, T[] target)
+        { //<T>, <P> ' 어떤 타입(파라미터)이던 다 받아 들이겠다 ' 
+            for (int i = 0; i < source.Length; i++)
+            {
+                target[i] = source[i];
+            }
+        }
+```   
+
+**실무 사용 코드 예제1**   
+```ruby   
+namespace GenericListApp
+{
+    class Program
+    {
+
+        //가장 실무에서 많이 사용되는 컬렉션 1 
+        static void Main(string[] args)
+        {
+            List<int> list = new List<int>() { 1,2,3,4,5,6};
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item}");
+            }
+            list.Reverse();
+            Console.WriteLine("Descending(역정렬)");
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            list.Insert(3,20);
+            Console.WriteLine("값 추가");
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            list.RemoveAt(5);
+            Console.WriteLine("값 삭제");
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            List<string> strList = new List<string>() { "일", "이", "삼", "사", "오"};
+            Console.WriteLine("문자열 리스트");
+            foreach (var item in strList)
+            {
+                Console.WriteLine($"{item}");
+            }
+        }
+    }
+}
+```   
+
+**실무 사용 코드 예제2**   
+```ruby   
+namespace DictionaryApp
+{
+    class Program
+    {
+        //실무에서 많이 쓰는 컬렉션 2
+        static void Main(string[] args)
+        {
+            Dictionary<int, string> pairs = new Dictionary<int, string>() {
+                { 1,"One"}, { 2, "Two"}, { 3,"Three"}, { 4, "Four"}, { 5, "Five"} };
+           /* pairs[1] = "One";
+            pairs[2] = "Two";
+            pairs[3] = "Three";
+            pairs[4] = "Four";
+            pairs[5] = "Five";*/
+
+            foreach (var item in pairs)
+            {
+                Console.WriteLine($"{item.Key} : {item.Value}");
+            }
+
+            Dictionary<string, string> pairs2 = new Dictionary<string, string>() { };
+            pairs2 ["일"] = "One";
+            pairs2 ["이"] = "Two";
+            pairs2 ["삼"] = "Three";
+            pairs2 ["사"] = "Four";
+            pairs2 ["오"] = "Five";
+
+            foreach (var item in pairs2)
+            {
+                Console.WriteLine(item);
+            }
+
+        }
+
+    }
+}
+```   
+
+### 2-5) 예외 처리하기   
+
+#### (1) 예외에 대해   
+
++ 예외 : 개발자가 생각하는 시나리오에서 벗어나는 사건   
++ 예외 처리 : 프로그램의 오류나 다운으로 이어지지 않도록 처리   
+
+#### (2) Try ~ Catch로 예외 받기   
+
++ 발생한 예외를 받아서 처리해줌   
++ 메커니즘   
+   + try절에 실행하고자 했던 코드를 처리   
+   + 예외(if여러개)가 던져지면 catch블록 (여러개)에서 받아서 처리!   
+
+**Try Catch 문 코드 예제**   
+```ruby   
+
+namespace TryCatchApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] arr = { 1, 2, 3 };
+            try
+            {
+                
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine($"{i}번째 값 : {arr[i]}");
+                }
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+
+                Console.WriteLine($"예외발생 : {ex.Message}");
+            }
+
+            Console.WriteLine("나머지 일처리 계속...");
+            int x = 108, y = 0;
+            int result = 0;
+
+            try
+            {
+                result = x / y;
+                Console.WriteLine($"결과는 {result}");
+            }
+            catch (DivideByZeroException ex)
+            {
+                Console.WriteLine($"예외발생 : {ex.Message}");
+            }
+            Console.WriteLine(" 또 나머지 일처리 계속...");
+        }
+    }
+}
+```   
+
+#### (3) Throw문 "입벌려, 예외들어간다!"   
+
++ throw문   
+   : 예외를 던지는 방법   
++ 메소드 내에서 예외를 던질 경우, 메소드를 호출한 Try ~ Catch문에서 받음   
+
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
 
 
 
