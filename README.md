@@ -682,6 +682,932 @@ goto 레이블;
 
 ---   
 
+## 2. C# 객체지향 문법   
+
+```
+클래스 / 캡슐화 / 상속 / 다향성 / C#클래스 확장 / 멤버 유형 확장   
+```   
+
+### 2-1) Class  
+
+#### (1) 클래스란?   
+**코드 내의 모든 것을 객체로 표현하려는 패러다임**   
+   + 객체(Object) : 세상의 모든 것을 지칭   
+
++ 객체의 표현   
+   + 속성 : 데이터   
+   + 기능 : 메소드   
+
++ 클래스 : 객체를 만들기 위한 청사진   
+   + Ex) int a = 30;   
+      + int : 클래스, 청사진   
+      + a : 객체, int의 실체   
+
+#### (2) 클래스의 선언과 객체 생성   
+
+**클래스 선언 기본 형태**   
+```
+class 클래스 이름   
+{
+   //데이터와 메소드
+}   
+```   
+
+#### (3) 생성자와 종료자   
+
++ 객체를 만드는 생성자   
+   + 클래스와 같은 이름
+   + 반환 형식 없음   
+
++ 객체를 파괴하는 종료자   
+   + 클래스 이름 앞에 ~ 를 붙인 형태
+   + 매게변수 X , 한정자 X   
+   + 오버로딩 불가능   
+   + 직접 호출할 수 없음   
+
+**생성자와  코드 예제**   
+```ruby   
+class ObjectTest
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("객체사용");
+
+            /*cat cat1 = new cat(); //고양이 객체의 실체(instance) 생성
+            cat1.Name = "야옹이";
+            cat1.Color = "흰색";
+            cat1.Meow();
+            cat kitty = new cat();
+            kitty.Name = "헬로키티";
+            kitty.Color = "하얀색";
+            kitty.Meow();
+            cat nero = new cat();
+            nero.Name = "검은 고양이 네로";
+            nero.Color = "검은색";
+            nero.Meow();*/
+
+            cat yomi = new cat("요미", "흰색", "암컷");
+            yomi.Meow();
+
+        }
+    }
+
+    class cat //객체
+    {
+        public cat() { }
+
+        public cat(string Name)
+        {
+            this.Name = Name; //this : 객체 자기 자신
+        }
+
+        public cat(string Name, string Color) : this(Name) //사용자 정의 생성자
+        {
+            this.Color = Color;
+        }
+
+        public cat(string Name, string Color, string Gender) : this(Name, Color)
+        {
+            this.Gender = Gender;
+        }
+
+        //속성, 특성, 변수
+        public string Name; //이름
+        public string Color; //색상
+        public string Gender; //성별
+
+        //행위, 기능, 메소드
+        public void Meow()
+        {
+            Console.WriteLine($"{this.Name}(색상 {this.Color} / 성별 {this.Gender}) : 야옹!");
+        }
+    }   
+```   
+
+#### (3) 정적 필드와 정적 메소드   
+
++ static은 메소드나 필드가 클래스 자체에 소속되도록 지정하는 한정자   
++ 인스턴스 소속 필드 VS 클래스 소속 필드   
+   + 클래스 소속된 필드 (Static) : 인스턴스를 만들지 않고 클래스의 이름을 통해 필드에 직접 접근   
++ 프로그램 전체에 공유 하는 변수에 사용함   
+
+**정적 필드,메소드 사용 코드 예제**   
+```ruby   
+ class TestClass
+    {
+        public static int number;
+        public float fnum;
+
+        public static float ProcSomething()
+        {
+            Console.WriteLine($"{number}, 먼가를 한다.");
+            return 1.0f;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            TestClass aCls = new TestClass();
+            TestClass.number = 10;
+            aCls.fnum = 3.25f;
+
+            TestClass bCls = new TestClass();
+            bCls.fnum = 4.87f;
+
+            TestClass.ProcSomething();
+        }
+
+
+    }   
+```   
+
+#### (4) 객체 복사하기 : 얕은 복사 / 깊은 복사   
+
+#### (5) 객체 자신을 지칭하는 This   
++ 객체 내부에서 자신의 필드나 메소드에 접근할 때 사용   
+
+#### (6) 은닉성 (캡슐화)의 구현   
++ 감추고 싶은 것은 감추고, 보여주고 싶은 것만 보여줌   
+
+**은닉성 코드 예제**   
+```ruby   
+namespace AccessModiFierTestApp
+
+{   //접근 제한, 정보은닉 처리
+    class Boiler
+    {
+        internal int temp = 5; //물 온도 //public>[protecte>private : 접근제한],internal (빈도 낮음)
+
+        public void SetTemp(int temp)
+        {
+            if (temp < 30 || temp > 60) 
+            {
+                Console.WriteLine("물의 온도가 일정온도를 벗어났습니다.59℃ 맞춥니다.");
+                this.temp = 59;
+                return;
+            } else
+            {
+                this.temp = temp; //온도 지정
+            }
+            
+        }
+
+        public int GetTemp(){
+            return this.temp;
+        }
+
+        public void TurnOnBoiler() {
+            Console.WriteLine("보일러를 켭니다.");
+        }
+
+        public void TurnOffBoiler() {
+            Console.WriteLine("보일러를 끕니다."); 
+        }
+    }
+    class MainApp
+    {
+        static void Main(string[] args)
+        {
+            Boiler kiitturami = new Boiler();
+            var currTemp = kiitturami.GetTemp ();
+            Console.WriteLine($"현재온도는 {currTemp}℃ 입니다.");
+            kiitturami.SetTemp(40);
+            kiitturami.TurnOnBoiler();
+            kiitturami.SetTemp(59);
+
+            if (kiitturami.GetTemp() >= 59)
+            {
+                kiitturami.TurnOffBoiler();
+            }
+        }
+    }
+}   
+```   
+
+#### (7) Class 상속   
+
++ 부모 클래스와 자식 클래스 관계 파악 중요   
+
+**상속 코드 예제**   
+```ruby   
+namespace InheritTestApp
+{
+    class Parent
+    {
+        protected string Name; // 부모 클래스의 속성 
+
+        public Parent(string Name)
+        {
+            this.Name = Name; //Name 초기화
+            Console.WriteLine($"{this.Name}Parent() 생성자"); //this Name에 parent를 생성하겠음
+        }
+
+        public void ParentMethod()
+        {
+            //...
+            Console.WriteLine($"{this.Name}.ParentMethod() 실행");
+        }
+    }
+
+    // 자식클래스 만들게 (부모클래스 상속할거야)
+    class Child : Parent
+    {
+        public String Color; //색상
+
+
+        public Child(string Name) : base(Name)
+        {
+            Console.WriteLine($"{this.Name}.Child() 생성자");
+        }
+
+        public void ChildMethod()
+        {
+            Console.WriteLine($"{this.Name}.ChildMethod() 실행");
+        }
+
+        public void Getcolor()
+        {
+            Console.WriteLine($"{this.Name}의 색상 {this.Color}");
+        }
+    }
+    class MainApp
+    {
+        static void Main(string[] args)
+        {
+            Parent p = new Parent(" 부모 ");
+            p.ParentMethod(); // 부모클래스 메서드 실행
+
+            Child c = new Child("자식");
+            c.ParentMethod(); //부모의 메서드 실행
+            c.ChildMethod(); //자식 클래스 메서드 실행
+            c.Color = "황색";
+            c.Getcolor();
+
+        }
+    }
+}
+```   
+
+#### (8) 기반클래스와 파생클래스 사이의 형식 "Welcome Zoom!"   
++ 기반클래스와 파생클래스 사이에 족보를 오르내리는 형식 변환 가능   
++ 자식클래스가 부모클래스의 인스턴스로 사용 가능   
++ 코드 수정 시 클래스 기반 내 필요한 작업   
+
+**Zoom Code Example**   
+```ruby  
+namespace NewOverrideTestApp
+{
+    class Mammal //포유류
+    {
+        public string Name { get; set; }
+
+        public void Breathe()
+        {
+            Console.WriteLine($"{this.Name}이(가) 숨을 쉰다.");
+        }
+
+        /*public void Move()
+        {
+            Console.WriteLine($"{this.Name}이(가) 이동한다.");
+        }*/
+
+        public virtual void Move()
+        {
+            Console.WriteLine($"(부모작업){this.Name}이(가) 이동한다.");
+        }
+    }
+
+    class Dog : Mammal
+    {
+        /* public void Move()
+         {
+             Console.WriteLine($"{this.Name}이(가) 네 발로 달린다.");
+         }
+ */
+
+        public override void Move()
+        {
+            base.Move(); //부모에 있는 Move 실행
+            Console.WriteLine($"{this.Name}이(가) 네 발로 달린다."); //+alpha 실행
+        }
+    }
+
+    class Huamn : Mammal
+    {
+        public new void Move()
+        {
+            //부모의 메서드 숨긴다
+            Console.WriteLine($"{this.Name}이(가) 두 발로 움직인다.");
+        }
+    }
+
+    class Whale : Mammal //고래
+    {
+        public override void Move()
+        {//부모의 메서드를 재정의 
+            Console.WriteLine($"{this.Name}이(가) 지느러미로 헤엄친다.");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dog ppopi = new Dog();
+            ppopi.Name = "뽀삐";
+            ppopi.Move();
+
+            Huamn Edun = new Huamn();
+            Edun.Name = "Edun";
+            Edun.Move();
+
+            Whale whale = new Whale();
+            whale.Name = "고래";
+            whale.Move();
+        }
+    }
+}
+```   
+
+#### (9) is와 as {C#의 형 변환 연산자}   
+
++ is   
+   + 객체가 해당 형식에 해당하는 검사 후 bool값으로 변환   
++ as   
+   + 형식 변환 연산자와 같은 역할   
+   + 참조 형식에만 사용   
+   + 변환에 실해시, 객체 참조를 null로 만듦   
+
+**TypeCasting Code Example**   
+```ruby   
+namespace ClassTypeCastApp
+{ //형변환
+    class 포유류
+    {
+        public void 키우다 ()
+        {
+            Console.WriteLine("키우다()");
+        }
+    }
+
+    class 강아지 : 포유류
+    {
+        public void 멍멍()
+        {
+            Console.WriteLine("멍멍!");
+        }
+    }
+
+    class 고양이 : 포유류
+    {
+        public void 야옹()
+        {
+            Console.WriteLine("야옹!");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            포유류 _포유류 = new 포유류();
+            _포유류.키우다();
+
+            // 자식이 부모클래스로 변환 [묵시적 변환]
+            _포유류 = new 강아지();
+            _포유류.키우다();
+            강아지 쭈쭈;
+
+            if (_포유류 is 강아지)
+            {
+                쭈쭈 = _포유류 as 강아지;
+                쭈쭈.멍멍();
+            }
+
+            /*_포유류 = new 고양이();
+            _포유류.키우다();
+            _포유류.야옹(); => 에러*/
+
+
+
+            // [명시적 변환]부모가 자식클래스로 변환 : 들어간다라고 자식을 불러줘야함
+            // 근데 명시적 변환은 쓸모 없음. 실행자체가 안됨.
+            강아지 뽀삐 = null;
+                if (뽀삐 is 포유류)
+            {
+                Console.WriteLine("이 부분이 실행됩니다.");
+                뽀삐 = new 포유류() as 강아지;
+                뽀삐.키우다();
+                뽀삐.멍멍();
+            }
+          
+            /*고양이 로미 = (고양이) new 포유류();
+            로미.키우다();
+            로미.야옹();*/
+
+        }
+    }
+}   
+```   
+
+#### (10) Tuple    
++ 여러 필드를 담을 수 있는 구조체   
+   + 형식의 이름을 갖지 않음   
+    + 임시적으로 사용할 복합 데이터 형식 선언에 적합
+```ruby
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            var tuple1 = (1, "박효진", "010-8845-2413", "김해시 계동로", true);
+
+            var tuple2 = (Idx: 2, Name: "홍길동", Phone: "010-9999-9999", Address: "경남 창원시 의창구", Marrige: false);
+
+            Console.WriteLine($"{tuple1.Item1} / {tuple1.Item2} / {tuple1.Item3} / {tuple1.Item4} / {tuple1.Item5}");
+            Console.WriteLine($"{tuple2.Item1} / {tuple2.Item2} / {tuple2.Item3} / {tuple2.Item4} / {tuple2.Item5}");
+            Console.WriteLine($"{tuple2.Idx} / {tuple2.Name} / {tuple2.Phone} / {tuple2.Address} / {tuple2.Marrige}");
+        }
+    }   
+```   
+
+#### (11) Class VS Struct(구조체)   
++ Class   
+   + 참조 형식
+   + 얕은 복사 (Shallow Copy)   
+   + new 연산자와 생성자 필요   
+   + 매개 변수 없는 생성자 선언 가능   
+   + 상속 가능   
+
++ Struct   
+   + 값 형식   
+   + 깊은 복사 (Deep Copy)   
+   + 선언 만으로도 생성 가능   
+   + 매개 변수 없는 생성자 선언 불가능   
+   + 모든 구조체는 System.Object형식을 상속하는    
+      System.Value Type으로부터 직접 상속 받음   
+      
+#### (12) 한 눈에 정리하는 Class 예제!   
+```ruby   
+public class MyCustomer
+{
+    // 필드
+    private string name;
+    private int age;
+
+    // 이벤트 
+    public event EventHandler NameChanged;
+
+    // 생성자 (Constructor)
+    public MyCustomer()
+    {
+        name = string.Empty;
+        age = -1;
+    }
+
+    // 속성
+    public string Name
+    {
+        get { return this.name; }
+        set 
+        {
+            if (this.name != value)
+            {
+                this.name = value;
+                if (NameChanged != null)
+                {
+                    NameChanged(this, EventArgs.Empty);
+                }
+            }                
+        }
+    }
+    public int Age
+    {
+        get { return this.age; }
+        set { this.age = value; }
+    }
+
+    // 메서드
+    public string GetCustomerData()
+    {
+        string data = string.Format("Name: {0} (Age: {1})", 
+                    this.Name, this.Age);
+        return data;
+    }
+}   
+```   
+
+---   
+
+### 2-2) 인터페이스와 추상 클래스   
+
++ 인터페이스   
+   + 인터페이스는 클래스가 따라야 하는 **약속** 이다   
+   + Class는 자기자신을 상속하지 못하기에 쓰이는 인터페이스
+   + 인터페이스를 상속하느 인터페이스   
+      + 기존 인터페이스에 새로운 기능을 추가한 인터페이스를 만들고 싶을 때   
+      + 필요한 인터페이스가 어셈블리로만 제공되는 경우   
+      + 필요한 인터페이스를 상속한 클래스가 있는 경우   
+
++ 추상 클래스   
+   + 구현을 가지되 인스턴스는 갖지 못함   
+   + 클래스의 접근성에 사용됨   
+   + 다른 추상클래스 상속 가능   
+      + 자식 추상 클래스에서 부모의 추상 메소드 구현의무는 없음   
+
+**인터페이스와 추상 클래스 코드 예제**   
+```ruby
+namespace InterfaceTestApp
+{
+    /*class Ridable //탈것
+    {
+        public void Ride()
+        {
+            Console.WriteLine("탈 것!");
+        }
+    }*/
+
+    interface ICar
+    {
+        void Run();
+        void Ride();
+    }
+
+    interface IPlane
+    {
+        void Fly();
+
+        void Ride();
+
+    }
+
+    class DroneCar : IPlane, ICar
+    {
+        public void Fly()
+        {
+            Console.WriteLine("드론카 날다!");
+        }
+
+        public void Ride()
+        {
+            Run();
+            Fly();
+        }
+
+        public void Run()
+        {
+            Console.WriteLine("드론카 달리다!");
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            DroneCar dreamCar = new DroneCar();
+            dreamCar.Ride();
+        }
+
+    }
+}
+```   
+
+```ruby   
+namespace LoggerTestApp
+{
+    interface ILogger
+    {
+        void WriteLog(string message);
+    }
+
+    class ConsoleLogger : ILogger
+    {
+        public void WriteLog(string message)
+        {
+            Console.WriteLine($"{DateTime.Now} : {message}");
+        }
+    }
+
+    interface IFormattableLogger : ILogger    // 인터페이스의 상속 
+    {
+         void WriteLog(string format, params object[] args);
+    }
+
+    class ConsoleformatLogger : IFormattableLogger
+    {
+        public void WriteLog(string format, params object[] args)
+        {
+            string message = String.Format(format, args);
+            Console.WriteLine($"{DateTime.Now.ToLocalTime()} / {message}");
+        }
+
+        public void WriteLog(string message)
+        {
+            Console.WriteLine($"{DateTime.Now.ToLocalTime()} / {message}");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("ConsoleLogger");
+            ConsoleLogger logger = new ConsoleLogger();
+            logger.WriteLog("로그메시지");
+
+            IFormattableLogger logger2 = new ConsoleformatLogger();
+            logger2.WriteLog("{0} * {1} = {2}", 3, 4, 12);
+        }
+    }
+}
+```   
+
+```ruby   
+namespace MultiInterfaceApp
+{
+    interface IRunnable // 자동차 종류
+    {
+        void Run();
+    }
+
+    interface IFlyable // 비행기 종류
+    {
+        void Fly();
+    }
+
+    class DroneCar : IRunnable, IFlyable
+    {
+        public void Fly()
+        {
+            Console.WriteLine("날아가자!");
+        }
+
+        public void Run()
+        {
+            Console.WriteLine("달리자!");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("드론카!");
+
+            DroneCar DreamCar = new DroneCar();
+            DreamCar.Run();
+            DreamCar.Fly();
+
+            Console.WriteLine("자동차로 변경 (interface)");
+            IRunnable car = DreamCar as IRunnable;
+            car.Run();
+            //car.Fly(); //erro
+
+            Console.WriteLine("비행기로 변경(interface)");
+            IFlyable plane = DreamCar;
+            plane.Fly();
+            //plane.Run();//erro
+
+        }
+    }
+}    
+```   
+
+
+
+
+
+
+
+
+### 2-2) 메소드 (Method)   
+
+#### (1) 메소드 (Method)   
+
++ 메소드란?   
+   : 일련의 코드를 하나의 이름 아래 묶은 것     
+      + C와 C++의 함수와 비슷한 기능   
+      + 클래스 내에서 일련의 코드 블럭을 실행시키는 함수   
+      + 0 ~ N개의 인수를 가지고 있음   
+      + 하나의 리턴 값을 가지고 있음   
+      + 리턴 값이 없으면 리턴 타입을 void로 표시      
+
++ 메소드의 접근 지정자   
+   + private   
+   + public   
+   + protected   
+      + 접근 가능한 범위를 지정   
+      
+**메소드 기본 예제**   
+```
+ class Calculator
+    {
+        static void Main(string[] args)
+        {
+            int x = Calculator.Plus(3, 4);
+            int y = Calculator.Plus(5, 6);
+            int z = Calculator.Plus(7, 8);
+
+            int result = x + y + z;
+            Console.WriteLine($"결과는 {result}");
+        }
+
+        private static int Plus(int p1, int p2)
+        {
+            // throw new NotImplementedException();
+            Console.WriteLine($"Input : {p1}, {p2}");
+            int result = p1 + p2;
+            Console.WriteLine($"Output : {result}");
+            return result;
+        }
+    }   
+```   
+
+#### (2) Ref와 Out   
+
++ ref   
+   + 변수값을 그대로 전달 X → 변수의 메모리 주소를 전달 O   
+   + 변수를 전달하기 전 초기화 해야함   
+   
++ out   
+   + ref와 비슷하게 인수를 참조로 전달할 때 사용   
+   + 초기화 하지 않고도 전달 가능   
+
+**Ref와 Out 코드 예제**   
+```ruby   
+  class Program
+    {
+        static void Main(string[] args)
+        {
+            int a = 22, b = 3;
+            int val = 0;
+            int rem = 0;
+            Divide(a, b, out val, out rem);
+
+            Console.WriteLine($"{a},{b} : a/b = {val}, a%b = {rem} ");
+
+            bool isSucced = int.TryParse("1000.74", out int result);
+            Console.WriteLine($"변환결과{isSucced} , result값 {result}");
+            
+
+        }
+
+        static void Divide(int a, int b, out int quotient, out int remainder)
+        {
+            quotient = a / b;
+            remainder = a % b;
+        }
+    }   
+```   
+
+#### (3) 메소드 오버로딩   
+
++ 하나의 메소드 이름에 여러 개의 구현을 올리는 것   
++ 매개 변수의 수와 형식을 분석해 호출할 메소드 결정   
++ 이름에 대한 고민을 덜어줌   
++ 코드의 일관성을 제공   
++ 똑같은 메소드 명에 매개변수에 따라 호출되는 메소드가 다름   
+
+**오버로딩 메소드 기본 예제**   
+```
+class Calculator
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("계산기!");
+
+            int x = Calculator.Plus(3,4);
+            Console.WriteLine($"3 + 4 = {x}");
+
+            float y = Calculator.Plus(3.14f, 5.6f);
+            Console.WriteLine($"3.14 + 5.6 = {y}");
+            Console.WriteLine($"3.14 + 5.6 = {Calculator.Plus(3.14, 5.6)}");
+            Console.WriteLine($"3.14 + 5.6 = {Calculator.Plus(3.14, "5")}");
+            int z = Calculator.Plus(7,8,9);
+
+            
+            // [가변길이 매개변수]밑에것처럼 쓰면 매개변수 쓰기 짱 편해! 
+            int total = 0;
+            total = sum(1,2, 4, 8, 24);
+            Console.WriteLine($"합계는 {total}");
+            Console.WriteLine($"10까지의 합은 {sum(1,2,3,4,5,6,7,8,9,10)}");
+
+            int[] arrs = new int[] {1,2,3,4,5,6,7,8,9,10 };
+            Console.WriteLine($"10까지의 합은 {sum(arrs)}");
+        }
+
+        private static int Plus(int v1, int v2, int v3)
+        {
+            int result = v1 + v2 + v3;
+            return result;
+        }
+
+        private static int sum(params int [] args)
+        {
+            int result = 0;
+            foreach (var arg in args)
+            {
+                result += arg;
+            }
+            return result;
+        }
+
+
+        private static double Plus(double v1, string v2)
+        {
+            double.TryParse(v2, out double p2);
+            double result = v1 + p2;
+            return result;
+        }
+
+        private static double Plus(double v1, double v2)
+        {
+            double result = v1 + v2;
+            return result;
+        }
+
+        private static float Plus(float v1, float v2)
+        {
+            float result = v1 + v2;
+            return result;
+        }
+
+        private static int Plus(int v1, int v2)
+        {
+            int result = v1 + v2;
+            return result;
+        }
+    }
+    
+```   
+    
+#### (4) 명명된 매개변수와 선택적 매개변수   
+
+```ruby   
+ class Program
+    {
+        static void Main(string[] args)
+        {
+            PrintProfile("박효진", "010-8845-2413");
+
+           if( PrintProfile(null, "010-1111-2222") == -1);
+            {
+                Console.WriteLine("프로필 출력 시 오류가 발생했습니다.");
+            }
+
+            //[명명된 매개변수 - "",] 가독성에 짱 좋음!
+            /*PrintProfile(phone:"010-1708-3826", name: "홍길동");
+            PrintProfile(name:"홍길순", phone : "010-2708-3878" );*/
+            
+            //[선택적 매개변수 ] 순서중요! 뒤에서부터 값이 입력이 되어야만 가능
+            PrintProfile("최백호");
+        }
+        public static int PrintProfile (string name, string phone = "010-8845-2413") // voide 쓸 때와 int 쓸 때와 다른 것을 인지해야 함
+        {    if (string.IsNullOrEmpty(name))
+            {
+                Console.WriteLine("이름을 정확히 입력하세요.");
+                return -1;
+            }
+
+            //프로필 출력
+            Console.WriteLine($"이름 : {name}, 폰 번호 : {phone}");
+            return 0;
+        }
+    }   
+```   
+
+#### (5) Swap메소드   
+   + 정렬할 때 쓰이는 메소드 
+   + DB의 ordeby, desc, esc와 같음   
+
+```ruby   
+class Program
+    {
+        static void Main(string[] args)
+        {
+            int x = 47, y = 5;
+            Console.WriteLine($"Before Swap {x},{y}");
+            Program.Swap(/*ref*/ x, /*ref*/ y); //정렬 기반
+
+            Console.WriteLine($"After Swap {x},{y}");
+        }
+
+        private static void Swap(/*ref*/ int p1, /*ref*/ int p2) //refurence : 주소 
+        // Swap 메소드 : 정렬할 때 쓰임 ( DB 의 orderby, desc, esc 와 같음) 
+        {
+            int temp = p1; // temp 47 이 들어온겨 
+            p1 = p2; // p1 = 5, p2 =5 
+            p2 = temp; // p2 = 47
+        }
+    }
+```   
+
+
+    
+    
+
+
+
+
 
 
 
