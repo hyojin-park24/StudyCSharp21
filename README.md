@@ -358,6 +358,92 @@ namespace ArrayListApp
 
 ![결과1](/Media/ArrayTest.png "배열 ")   
 
+**알아두면 좋은 Array 클래스의 주요 메소드와 프로퍼티**   
+
++ 정적 메소드   
+   + FindIndex<T>()   
+         
+      + 배열에서 지정한 조건에 부함하는 첫 번째 요소의 인덱스를 반환   
+   + Resize<t>()    
+     
+      + 배열의 크기를 조정   
+   + Clear()   
+      + 배열의 모든 요소를 초기화   
+   + ForEach<T>()   
+      
+      + 배열의 모든 요소에 대해 동일한 작업을 수행하게 함   
+
++ 인스턴스 메소드   
+   + GetLength()   
+      + 배열에서 지정한 차원의 길이를 반환   
+
++ 프로퍼티   
+   + Length   
+      + 배열의 길이를 반환   
+   + Rank   
+      + 배열의 차원을 반환   
+ 
+**Arrat Code Example**   
+```ruby   
+ class Program
+    {
+        static void Main(string[] args)
+        {
+            ArrayList array = new ArrayList( new[] { 80,74,81,90,34});
+
+            var loc = array.IndexOf(81);
+            array.Insert(loc, 50);
+
+            Console.WriteLine("81위치에 50추가");
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+            Console.WriteLine("90 삭제");
+            loc = array.IndexOf(90);
+
+            array.RemoveAt(4);
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            Console.WriteLine("정렬");
+            array.Sort(); // 정렬
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+        }
+    }   
+```   
+
+```ruby   
+static void Main(string[] args)
+        {
+            int[,] arr = new int[2, 3];
+            arr[0, 0] = 1;
+            arr[0, 1] = 2;
+            arr[0, 2] = 3;
+            arr[1, 0] = 4;
+            arr[1, 1] = 5;
+            arr[1, 2] = 6;
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+                    Console.Write($"[{i} ,{j} ] : {arr[i,j]}\t");
+                }
+
+                Console.WriteLine("");
+            }
+        }   
+```   
+
 ---
 
 ### 1-6) 코드 흐름의 제어   
@@ -1372,14 +1458,9 @@ namespace MultiInterfaceApp
 }    
 ```   
 
+---
 
-
-
-
-
-
-
-### 2-2) 메소드 (Method)   
+### 2-3) 메소드 (Method)   
 
 #### (1) 메소드 (Method)   
 
@@ -1600,6 +1681,392 @@ class Program
         }
     }
 ```   
+
+### 2-4) 프로퍼티 {캡슐화의 프로퍼티}   
+
+#### (1) 프로퍼티란?   
+
+**Public의 관대함**   
++ 할당연산자(=)를 이용한 필드 액세스의 간편함   
+   + 데이터의 오염 가능성이 높아짐!!!   
+
++ Get/SEt 메소드를 사용한 필드 은닉   
+   + 번거롭고 귀찮음!!   
+
+∴ 은닉성과 편의성 두마리 토끼를 다 잡는 방법 = **프로퍼티**   
+
+**프로퍼티 코드 예제**   
+```ruby   
+namespace PropertyTestApp
+{
+    class Myclass
+    {
+        private int iValue; // 0~120℃ 값만 입력받는 멤버 변수
+        private double dZeta;
+        private float fPng;
+        private string strVal;
+        private int inCode;
+
+        public int IValue 
+        {
+            get {
+                return this.iValue;
+            }
+            set {
+                if (value < 0)
+                    this.iValue = 0;
+                else if (value > 120)
+                    this.iValue = 120;
+                else
+                    this.iValue = value;
+                
+            }
+        }
+
+        public Myclass(int iValue)
+        {
+            IValue = iValue;
+            //this.SetValue (iValue);
+        }
+
+       /* public int GetValue()
+        {
+            return this.iValue;
+        }
+        public void SetValue(int iValue)
+        {
+            if (value < 0)
+            {
+                this.iValue = 0;
+            }
+            else if (iValue > 120)
+            {
+                this.iValue = 120;
+            }
+            else
+            {
+                this.iValue = iValue;
+            }
+        }*/
+
+        public void PrintValue()
+        {
+            Console.WriteLine($"값은 {this.iValue}");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Myclass myclass = new Myclass(1200);
+            myclass.PrintValue();
+
+            //myclass.SetValue(108);
+            myclass.IValue = 1200;
+            myclass.PrintValue();
+            //Console.WriteLine($"현재 온도는 {myclass.GetValue()}℃ 입니다.");
+            Console.WriteLine($"현재 온도는 {myclass.IValue}℃ 입니다.");
+        }
+    }
+}   
+```   
+
+#### (2) 자동 구현 프로퍼티   
+
++ 단순히 필드를 읽고 쓰기만 하는 경우에 사용  
++ 선언 동시에 초기화   
+
+**프로퍼티 최종 코드 예제***   
+
+```ruby   
+namespace PropertyTestApp2
+{
+    //생일정보 클래스
+    
+    class BirthdayInfo
+    {
+        private string name;
+        private DateTime birthday;
+
+        public string Name
+        {
+            get { return this.name; }
+            set { this.name = value; }
+        }
+
+        public DateTime Birthday
+        {
+            get { return this.birthday; }
+            set { this.birthday = value; }
+        }
+
+        public string GetName()
+        {
+            return this.name;
+        }
+
+        public void SetName(string name)
+        {
+            this.name = name;
+        }
+
+        public DateTime GetBirthday()
+        {
+            return this.birthday;
+        }
+
+        public void SetBirthday(DateTime birthday)
+        {
+            this.birthday = birthday;
+        }
+    }
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            BirthdayInfo info = new BirthdayInfo();
+            info.SetName("홍길동");
+            info.SetBirthday(new DateTime(1990,1,8));
+
+            Console.WriteLine($"이름 : {info.GetName()}");
+            Console.WriteLine($"생일 : {info.GetBirthday()}");
+
+            Console.WriteLine("프로퍼티 사용");
+
+            BirthdayInfo info2 = new BirthdayInfo();
+            info2.Name ="홍길순";
+            info2.Birthday= new DateTime(1992, 3, 26);
+
+            Console.WriteLine($"이름 : {info2.Name}");
+            Console.WriteLine($"생일 : {info2.Birthday}");
+        }
+    }
+}   
+```   
+
+### 2-2) 일반화 프로그래밍 - Generic과 실무사용 컬렉션   
+
+#### (1) 일반화 프로그래밍이란?   
++ 일반화   
+   + 특수한 개념으로 부터 공통된 개념을 찾아 묶는 것   
+
++ 일반화 프로그래밍   
+   + 일반화의 대상 - 데이터 형식   
+
+**일반화 프로그래밍 코드 예제**   
+
+```ruby   
+namespace Chap11App
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] source = { 11, 21, 33, 45, 56}; //5개 int 배열
+            int[] target = new int[source.Length]; //5개 int 배열 초기화
+
+            CopyArray(source, target);//int 배열 복사
+            Console.WriteLine("배열복사");
+            foreach (var item in target)
+            {
+                Console.WriteLine(item);
+            }
+
+            string[] source2 = { "하나", "둘", "셋", "넷", "다섯", "여섯"};
+            string[] target2 = new string[source2.Length];
+
+            CopyArray(source2, target2);
+            Console.WriteLine("strin 복사");
+            foreach (var item in target2)
+            {
+                Console.WriteLine(item);
+            }
+
+            float[] source3 = { 1.1f, 2.2f, 3.3f, 4.5f, 6.6f};
+            float[] target3 = new float[source3.Length];
+            Console.WriteLine("float 배열 복사");
+            foreach (var item in target3)
+            {
+                Console.WriteLine(item);
+            }
+        }
+
+        private static void CopyArray(string[] source2, string[] target2)
+        {
+            for (int i = 0; i < source2.Length; i++)
+            {
+                target2[i] = source2[i];
+            }
+        }
+
+        private static void CopyArray(int[] source, int[] target)
+        {
+            for (int i = 0; i < source.Length; i++)
+            {
+                target[i] = source[i];
+            }
+        }
+    }
+}   
+```   
+
+**Generic Code Example**   
+```ruby   
+
+namespace GenericClassApp
+{
+    class Array_Generic<T>
+    {
+        private T[] array;
+
+        public Array_Generic()
+        {
+            array = new T[10];
+        }
+
+        public T GetElement(int index) { return array[index]; }
+
+        public int Length
+        {
+            get { return array.Length; }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Array_Generic<int> array = new Array_Generic<int>();
+
+            Array_Generic<string> str = new Array_Generic<string>();
+        }
+    }
+}   
+```   
+
+**GenericCopyArray Code Example**   
+```ruby   
+ static void Main(string[] args)
+        {
+            int[] source = { 11, 21, 33, 45, 56 }; //5개 int 배열
+            int[] target = new int[source.Length]; //5개 int 배열 초기화
+
+            CopyArray(source, target);//int 배열 복사
+            Console.WriteLine("배열복사");
+            foreach (var item in target)
+            {
+                Console.WriteLine(item);
+            }
+
+            string[] source2 = { "하나", "둘", "셋", "넷", "다섯", "여섯" };
+            string[] target2 = new string[source2.Length];
+
+            CopyArray(source2, target2);
+            Console.WriteLine("strin 복사");
+            foreach (var item in target2)
+            {
+                Console.WriteLine(item);
+            }
+        }
+
+        private static void CopyArray<T>(T[] source, T[] target)
+        { //<T>, <P> ' 어떤 타입(파라미터)이던 다 받아 들이겠다 ' 
+            for (int i = 0; i < source.Length; i++)
+            {
+                target[i] = source[i];
+            }
+        }
+```   
+
+**실무 사용 코드 예제1**   
+```ruby   
+namespace GenericListApp
+{
+    class Program
+    {
+
+        //가장 실무에서 많이 사용되는 컬렉션 1 
+        static void Main(string[] args)
+        {
+            List<int> list = new List<int>() { 1,2,3,4,5,6};
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item}");
+            }
+            list.Reverse();
+            Console.WriteLine("Descending(역정렬)");
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            list.Insert(3,20);
+            Console.WriteLine("값 추가");
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            list.RemoveAt(5);
+            Console.WriteLine("값 삭제");
+            foreach (var item in list)
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            List<string> strList = new List<string>() { "일", "이", "삼", "사", "오"};
+            Console.WriteLine("문자열 리스트");
+            foreach (var item in strList)
+            {
+                Console.WriteLine($"{item}");
+            }
+        }
+    }
+}
+```   
+
+**실무 사용 코드 예제2**   
+```ruby   
+namespace DictionaryApp
+{
+    class Program
+    {
+        //실무에서 많이 쓰는 컬렉션 2
+        static void Main(string[] args)
+        {
+            Dictionary<int, string> pairs = new Dictionary<int, string>() {
+                { 1,"One"}, { 2, "Two"}, { 3,"Three"}, { 4, "Four"}, { 5, "Five"} };
+           /* pairs[1] = "One";
+            pairs[2] = "Two";
+            pairs[3] = "Three";
+            pairs[4] = "Four";
+            pairs[5] = "Five";*/
+
+            foreach (var item in pairs)
+            {
+                Console.WriteLine($"{item.Key} : {item.Value}");
+            }
+
+            Dictionary<string, string> pairs2 = new Dictionary<string, string>() { };
+            pairs2 ["일"] = "One";
+            pairs2 ["이"] = "Two";
+            pairs2 ["삼"] = "Three";
+            pairs2 ["사"] = "Four";
+            pairs2 ["오"] = "Five";
+
+            foreach (var item in pairs2)
+            {
+                Console.WriteLine(item);
+            }
+
+        }
+
+    }
+}
+```   
+
+
+
 
 
     
