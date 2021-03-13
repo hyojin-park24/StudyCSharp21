@@ -188,7 +188,8 @@ namespace OverflowTestApp
 }
 
 ```
-![참조1](/Media/Overflow.png "오버플로우 예제 결과") 
+![참조1](/Media/Overflow.png "오버플로우 예제 결과")   
+
 ---
 
 ### 1-4) 연산자   
@@ -213,7 +214,7 @@ namespace OverflowTestApp
 
 **<연산자>**   
 
-```
+```ruby
 namespace StringConcatApp
 {
     class Program
