@@ -11,6 +11,7 @@
 ◇ 윈도우 프로그래밍, 웹 프로그래밍, 게임 및 모바일 프로그래밍 등
    모든 영역에서 사용되는 범용 프로그래밍 언어   
 ```   
+---
 
 ### 1-2) C# 데이터 타입   
 + bool | True or False   
@@ -27,6 +28,7 @@
 + Object | 모든 타입의 기본 클래스로 모든 유형을 포함 할 수 있음   
 + int.MaxValue, int.MinValue | 최댓값, 최솟값   
 + Null | 값이 아닌 값 "아무리 생각해도 난 NULL을~♬"   
+---
 
 ### 1-3) C#데이터 형식   
 + 기본 데이터 형식
@@ -36,9 +38,17 @@
    + 클래스
    + 배열
 + 값 형식
-+ 참조 형식
++ 참조 형식   
 
-#### (1) 값 형식과 참조 형식   
+#### (1) 기본 데이터 형식
++ 값 형식
+   + 숫자 형식
+   + 논리 형식   
++ 참조 형식
+   + 문자열 형식
+   + 오브젝트 형식
+
+#### (2) 값 형식과 참조 형식   
 + 값 형식 (Stack)
    + 변수에서 값을 담는 형식
 + 참조 형식 (Heap)
@@ -57,11 +67,11 @@
 스택
 ![참조1](/Media/Stack2.png "스택")    
 스택과 힙   
-<img src="https://github.com/hyojin-park24/StudyCSharp21/blob/main/Media/stack%EA%B3%BC%20Heap2.png"/>  
+<img src="https://github.com/hyojin-park24/StudyCSharp21/blob/main/Media/stack%EA%B3%BC%20Heap2.png"/>    
 
+#### (3) 변수 및 상수  
 
-### 1-3) C# 변수 및 상수   
-#### (1) 변수   
+**(3-1) 변수
 ```   
 변수는 변하는 수이다.    
 조금 더 쉽게 접근하자면 작성자는 이렇게 말하고 싶다.    
@@ -80,7 +90,7 @@
     + bool 
 + 모든 C# 변수의 이름은 대소문자를 구별(case-sensitive)한다.
 
-#### 1-1) 변수 선언 방법   
+#### (3-2) 변수 선언 방법   
 **32비트 정수형과 64비트 정수형**   
 ```
 int n; //32비트 정수형
@@ -103,7 +113,7 @@ namespace HelloWorldApp
 }
 ```   
 
-#### (2) 상수  
+#### (3-3) 상수  
 ```ruby
 상수란?
 
@@ -144,7 +154,7 @@ namespace ConstTestApp
 }   
 ```   
 
-#### (2-1) ENUM (열거형)   
+#### (3-4) ENUM (열거형)   
 **열거형이란?**   
 enum은 열거형 상수(constant)를 표현하기 위해 태어났다.   
 enum을 통해 상수 숫자들을 의미있는 단어로 표현이 가능하고, 
@@ -155,7 +165,37 @@ enum을 통해 상수 숫자들을 의미있는 단어로 표현이 가능하고
 + 클래스 안 OR 네임스페이스 안에서만 선언 가능
 + 메서드 OR 속성 안에서 선언    
 
-### 1-6) C# 배열(Array)   
+#### (4) 오버플로우 (OverFlow)와 언더플로우 (Underflow)   
+```ruby
+- 데이터가 흘러 넘쳤을 때: 데이터 형식의 최대값을 넘어가는 데이터를 저장 할 때
+- 언더플로우: 최저 값 보다 작은 데이터를 저장할 때   
+
+namespace OverflowTestApp
+{
+    public partial class Form1_Load : Form
+    {
+        public Form1_Load()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load_Load(object sender, EventArgs e)
+        {
+                int flow = 2147483647;
+                textBox1.Text = Convert.ToString(flow + 1);
+        }
+    }
+}
+```
+오버플로우 결과
+![참조1](/Media/Overflow.png "오버") 
+---
+
+### 1-4) 연산자   
+
+---
+
+### 1-5) 배열(Array)   
 ```
 배열이란?   
 동일한 데이터 타입의 집합이다.   
@@ -218,6 +258,7 @@ namespace ArrayListApp
 
 
 참조: https://blog.hexabrain.net/128 [끝나지 않는 프로그래밍 일기]
+      https://076923.github.io/posts/C-26/[오버플로우 코드 ]
 
 
 
