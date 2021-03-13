@@ -372,7 +372,7 @@ namespace ArrayListApp
 
 ### (1) 조건문 {if, else, switch}   
 
-#### (1-1) if~else문 "만약에~ 그렇지 않으면"   
+#### (1-1) if ~ else문  "만약에~ 그렇지 않으면"   
 ```ruby
 namespace Chap05
 {
@@ -411,7 +411,8 @@ namespace Chap05
     }
 }
 ```   
-**if문 결과값**
+**if문 결과값**   
+
 ![결과2](/Media/IfTestApp.png "if문")    
 
 #### (1-2) switch, Label, Break
@@ -503,7 +504,8 @@ namespace SwitchTestApp
 }
 ```   
 
-**switch문 결과값**
+**switch문 결과값**   
+
 ![결과3](/Media/SwitchTestApp.png "switch문 ")     
 
 ### (2) 반복문 {While, do, for, foreach}    
