@@ -110,10 +110,18 @@ namespace ConstTestApp
         }
     }
 }   
-```
+```   
 
+#### (2-1) ENUM (열거형)   
+**열거형이란?**   
+enum은 열거형 상수(constant)를 표현하기 위해 태어났다.   
+enum을 통해 상수 숫자들을 의미있는 단어로 표현이 가능하고, 
+프로그램을 쉽게 읽을 수 있게 만들어 준다.
 
-참조: https://blog.hexabrain.net/128 [끝나지 않는 프로그래밍 일기]
++ 각 요소는 별도의 지정 없이 첫번째 요소가 0부터 시작함
++ 개발자가 임의로 의미있는 번호 지정 가능
++ 클래스 안 OR 네임스페이스 안에서만 선언 가능
++ 메서드 OR 속성 안에서 선언    
 
 ### 1-4) C# 배열(Array)   
 ```
@@ -176,6 +184,8 @@ namespace ArrayListApp
 ![결과1](/Media/ArrayTest.png "배열 ")  
 
 
+
+참조: https://blog.hexabrain.net/128 [끝나지 않는 프로그래밍 일기]
 
 
 
