@@ -45,6 +45,7 @@
     + char, string
   + 불린형
     + bool 
++ 모든 C# 변수의 이름은 대소문자를 구별(case-sensitive)한다.
 
 #### 1-1) 변수 선언 방법   
 **32비트 정수형과 64비트 정수형**   
@@ -67,7 +68,49 @@ namespace HelloWorldApp
         }
     }
 }
+```   
+
+#### 2) 상수  
+```ruby
+코드를 작성하다가 나도 모르게 값을 변경하지 말아야 할 변수를 건드려서 버그가 발생할 수 있다.
+이 문제를 쉽게 해결해주는 const라는 상수이다.
+const를 사용하게 되면 한번 초기화 된 값은 절대 변하지 않는것이 변수와의 차이점 이다.
+
+using System;
+
+namespace ConstTestApp
+{
+    class Program
+    {
+        enum Season // 열거형 ( 하나의 타입으로 표현 )
+        {
+            Spring,
+            Summer,
+            Fall,
+            Winter
+        }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("상수테스트");
+            const double PI = 3.141592;
+            Console.WriteLine($"원주율의 값는 {PI}");
+            // PI = 6.345;
+
+            Season mySeason = Season.Summer;
+            Console.WriteLine($"지금 계절은 핫 써머 아 핫핫 써머 일까요? {mySeason} 였습니다!");
+
+            int a = 0; //null 허용 안됌
+            Console.WriteLine($"a는 {a}");
+            int? b = null;
+            Console.WriteLine($"b는 {b}");
+
+        }
+    }
+}   
 ```
+
+
+참조: https://blog.hexabrain.net/128 [끝나지 않는 프로그래밍 일기]
 
 
 
