@@ -354,7 +354,7 @@ namespace ArrayListApp
     }
 }
 ```
-**코드 예제 결과 값**
+**<코드 예제 결과 값>**
 
 ![결과1](/Media/ArrayTest.png "배열 ")   
 
@@ -411,7 +411,7 @@ namespace Chap05
     }
 }
 ```   
-**if문 결과값**   
+**<if문 결과값>**   
 
 ![결과2](/Media/IfTestApp.png "if문")    
 
@@ -504,7 +504,7 @@ namespace SwitchTestApp
 }
 ```   
 
-**switch문 결과값**   
+**<switch문 결과값>**   
 
 ![결과3](/Media/SwitchTestApp.png "switch문 ")     
 
@@ -608,7 +608,7 @@ static void Main(string[] args)
 }   
 ```   
 
-**구구단 결과 값**   
+**<구구단 결과 값>**   
 
 ![결과4](/Media/Foreach.png "구구단 ")     
 
