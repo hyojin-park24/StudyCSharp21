@@ -186,11 +186,111 @@ namespace OverflowTestApp
         }
     }
 }
-![참조1](/Media/Overflow.png "오버") 
+
 ```
+![참조1](/Media/Overflow.png "오버플로우 예제 결과") 
 ---
 
 ### 1-4) 연산자   
++ 산술 연산자
+   + ' +, -, *, /, % '  
++ 할당 연산자   
+   + ' =, +=, -=, *=, /=, %= '   
++ 증감 연산자   
+   + ' ++, -- '   
++ 논리 연산자   
+   + ' && (And), || (Or), | (Not) '   
++ 관계/비교 연산자   
+   + ' <, >, ==, !=, >=, <= '   
++ 비트 연산자   
+   + ' & (And), | (Or), ^ (XOr) '   
+   + 비트 내에서의 연산   
++ Shift 연산자   
+   + ' >>, << '   
+   + 값을 이동시킬 수 있는 연산   
++ 조건 연산자   
+   + ' ?, ??'   
+
+```
+namespace StringConcatApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("숫자 더하기");
+            var p2 = 456; // 지역 변수로 만듦 [숫자 : int]
+            Console.WriteLine(123+p2); // 579 [int + int] = int
+            Console.WriteLine("123" + p2); // [string + int] = string / 문자열이 하나라도 있으면 문자열 결합으로 바뀜
+            Console.WriteLine($"123{p2}"); // [string] / 위와 결과값 같음 지금 방식이 훨씬 편함 (C# 6.0 이후 문자열 만드는 방법)
+            Console.WriteLine("123" + "456"); //[string + string] / 123456 [문자 : string]
+
+            // 관계연산자
+            int a = 30, b = 30;
+            Console.WriteLine( a > b); //false (true,false 화면 출력시, 대문자로 바뀜)
+            Console.WriteLine(a < b); // false
+            Console.WriteLine( a >= b ); // true
+            Console.WriteLine( a<=b ); //true
+            Console.WriteLine( a == b ); //true
+            Console.WriteLine(a != b); //false ( ! 는 '아니다'는 의미) 
+
+            //논리 연산자
+            Console.WriteLine("논리 연산자");
+            Console.WriteLine( 10 > 9 && a > 0 );//true ('&&' 는 '그리고' 의미)
+            Console.WriteLine( a > b || b > 0); // true ( || 는 '또는' 의미)
+            Console.WriteLine(!(a < b)); //true
+
+            // 조건연산자 단항 if 문을 대체 가능
+            int c = 30;
+            string result = c == 30 ? "삼십" : "삼십아님"; // = > 조건 연산자 써볼게 
+
+            /*string result;
+            if (c == 30)
+                result = "삼십";
+            else
+                result = "삼십아님";*/
+
+            Console.WriteLine(result);
+
+            //병합연산자 (NULL 조건부 연산자)
+
+            Console.WriteLine("NULL 병합연산자");
+            int? d = null;
+            Console.WriteLine($"{d}");
+
+          
+            
+
+        }
+    }
+}
+```
+
+```
+namespace IncDecTestApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("증감연산자 테스트");
+
+            int result = 26;
+            Console.WriteLine($"현재 숫자는 {result}");
+            result += 3;
+            Console.WriteLine($"현재 숫자는 {result}");
+            result -= 10;
+            Console.WriteLine($"현재 숫자는 {result}");
+
+            Console.WriteLine($"현재 숫자는 {result++}");
+            // ++result 와 result++ 랑 값변환 다름으로 위치 중요 (전치증감 / 후치증감)
+            // ++result 는 + 먼저, result++ 는 값 먼저 주고 +를 뒷 작업으로 보냄
+            Console.WriteLine($"전치감소 숫자는 {--result}");
+            Console.WriteLine($"후치감소 숫자는 {result--}");
+        }
+    }
+}
+```
 
 ---
 
