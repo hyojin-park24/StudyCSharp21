@@ -186,9 +186,8 @@ namespace OverflowTestApp
         }
     }
 }
-```
-오버플로우 결과
 ![참조1](/Media/Overflow.png "오버") 
+```
 ---
 
 ### 1-4) 연산자   
