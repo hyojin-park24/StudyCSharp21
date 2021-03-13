@@ -8,7 +8,8 @@
 ```
 ◇ 마이크로 소프트에서 개발된 객체 지향 프로그래밍 언어    
 ◇.NetFramework를 이용하여 프로그래밍하는 대표적인 언어   
-◇ 윈도우 프로그래밍, 웹 프로그래밍, 게임 및 모바일 프로그래밍 등 모든 영역에서 사용되는 범용 프로그래밍 언어   
+◇ 윈도우 프로그래밍, 웹 프로그래밍, 게임 및 모바일 프로그래밍 등
+   모든 영역에서 사용되는 범용 프로그래밍 언어   
 ```   
 
 ### 1-2) C# 데이터 타입   
@@ -109,10 +110,18 @@ namespace ConstTestApp
         }
     }
 }   
-```
+```   
 
+#### (2-1) ENUM (열거형)   
+**열거형이란?**   
+enum은 열거형 상수(constant)를 표현하기 위해 태어났다.   
+enum을 통해 상수 숫자들을 의미있는 단어로 표현이 가능하고, 
+프로그램을 쉽게 읽을 수 있게 만들어 준다.
 
-참조: https://blog.hexabrain.net/128 [끝나지 않는 프로그래밍 일기]
++ 각 요소는 별도의 지정 없이 첫번째 요소가 0부터 시작함
++ 개발자가 임의로 의미있는 번호 지정 가능
++ 클래스 안 OR 네임스페이스 안에서만 선언 가능
++ 메서드 OR 속성 안에서 선언    
 
 ### 1-4) C# 배열(Array)   
 ```
@@ -124,8 +133,59 @@ namespace ConstTestApp
 MBTI의 ENTJ가 가장 좋아하는 구성이다.
 ```
 
+```ruby
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ArrayListApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ArrayList array = new ArrayList( new[] { 80,74,81,90,34});
+
+            var loc = array.IndexOf(81);
+            array.Insert(loc, 50);
+
+            Console.WriteLine("81위치에 50추가");
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+            Console.WriteLine("90 삭제");
+            loc = array.IndexOf(90);
+
+            array.RemoveAt(4);
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            Console.WriteLine("정렬");
+            array.Sort(); // 정렬
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+        }
+    }
+}
+```
+**코드 예제 결과 값**
+
+![결과1](/Media/ArrayTest.png "배열 ")  
 
 
+
+참조: https://blog.hexabrain.net/128 [끝나지 않는 프로그래밍 일기]
 
 
 
