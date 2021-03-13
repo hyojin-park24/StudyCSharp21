@@ -57,7 +57,7 @@
 스택
 ![참조1](/Media/Stack2.png "스택")    
 스택과 힙   
-![참조1](/Media/stack과 Heap2.png "스택") 
+![참조2](/Media/stack과 Heap2.png "스택") 
 
 
 ### 1-3) C# 변수 및 상수   
