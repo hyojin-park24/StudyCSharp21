@@ -71,7 +71,7 @@
 
 #### (3) 변수 및 상수  
 
-**(3-1) 변수
+**(3-1) 변수**
 ```   
 변수는 변하는 수이다.    
 조금 더 쉽게 접근하자면 작성자는 이렇게 말하고 싶다.    
@@ -91,13 +91,13 @@
 + 모든 C# 변수의 이름은 대소문자를 구별(case-sensitive)한다.
 
 #### (3-2) 변수 선언 방법   
-**32비트 정수형과 64비트 정수형**   
+**<32비트 정수형과 64비트 정수형>**   
 ```
 int n; //32비트 정수형
 long sum; // 64비트 정수형   
 ```   
 
-**Hello, World! 문자형**   
+**<Hello, World! 문자형>**   
 ```ruby
 using System;
 
@@ -211,6 +211,8 @@ namespace OverflowTestApp
 + 조건 연산자   
    + ' ?, ??'   
 
+**<연산자>**   
+
 ```
 namespace StringConcatApp
 {
@@ -265,8 +267,9 @@ namespace StringConcatApp
     }
 }
 ```
+**<증감연산자>**   
 
-```
+```ruby
 namespace IncDecTestApp
 {
     class Program
