@@ -2130,37 +2130,687 @@ namespace TryCatchApp
    : 예외를 던지는 방법   
 + 메소드 내에서 예외를 던질 경우, 메소드를 호출한 Try ~ Catch문에서 받음   
 
+#### (4) Try ~ Catch와 Finally   
+**자원 해제같은 뒷마무리를 담당함**   
+
+**Finally절 코드 예제**
+
+```ruby
+namespace TryCatchFinallyApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                Console.Write("제수를 입력하세요 : ");
+                string temp = Console.ReadLine(); //string으로 입력받음
+                int divisor = int.Parse(temp);
+
+                Console.Write("피제수를 입력하세요 : ");
+                temp = Console.ReadLine();
+                int divdend = int.Parse(temp);
+
+                Console.WriteLine($"{divisor} / {divdend} = {Divide(divisor, divdend)}");
+            }
+            catch (NotImplementedException ex)
+            {
+                Console.WriteLine($"미 구현 예외발생 : {ex.Message}");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"입력값 예외!! : {ex.Message}");
+            }
+            catch (DivideByZeroException ex)
+            {
+                Console.WriteLine($"나누기 예외발생 : {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"예외발생 : {ex.Message}");
+            }
+            finally
+            {
+                Console.WriteLine("예외 발생 유무와 상관없이 늘 실행! try문 내 리소스 해제...");
+            }
+        }
+
+        private static object Divide(int divisor, int divdend)
+        {
+            Console.WriteLine("나누기 시작!");
+            if (divdend == 0) throw new DivideByZeroException("피제수가 0이 입력되었습니다.");
+            return divisor / divdend;
+        }
+    }
+}   
+```   
+
+#### (5) 사용자 정의 예외 클래스   
++ 특별한 데이터를 담아서 예외 처리 루틴에 추가 정보 제공   
++ 예외 상황 설명을 더 잘하고 싶을 때 사용   
+
+**Exception Code Example**   
+
+namespace ExceptionThrowApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+               DoSomething(13);
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"예외 발생 : {ex.Message}");
+            }
+        }
+
+        private static void DoSomething(int v)
+        {
+            
+                if (v <= 10)
+                {
+                    Console.WriteLine($"V^2 = {v * v}");
+                }
+                else
+                {
+                    throw new Exception("10보다 큰 값은 계산할 수 없습니다.");
+                }
+           
+        }
+    }
+}   
+
+---   
+
+### 2-6) 대리자와 이벤트   
+
+#### (1) 대리자란?   
+
++ 콜백   
+   : 대신 어떤 일을 해줄 코드를 두고 실행 시점에 부여   
+   
++ 콜백을 구현하는 방법 = 대리자   
+
++ 메소드에 대한 참조를 하는 대리자   
+   + 대리자에 메소드의 주소를 할당   
+
+**대리자 호출 코드 예제**   
+```ruby   
+namespace Chap13App
+{
+    delegate int MyDelegate(int a, int b); //대리자. 대신 호출한다.
+    class Calculator
+    {
+        public int Plus (int a, int b)
+        {
+            return a + b;
+        }
+
+        public int Minus(int a, int b)
+        {
+            return a - b;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Calculator calc = new Calculator();
+            MyDelegate callback;
+
+            callback = new MyDelegate(calc.Plus);
+            Console.WriteLine($"result = {callback(3,4)}");
+        }
+    }
+}   
+
+```   
+
+#### (2) 대리자 사용 이유와 시기   
+
++ "값"이 아닌 "코드"자체를 매게변수로 넘기고 싶을 때 
++ 대리자 사용 사례   
+   + 대리자 선언   
+   + 대리자가 참조할 비교메소드 작성   
+   + 정렬할 배열과 대리자를 매개변수로 받는 정렬 메소드 작성   
+   + 정렬 메소드 호출   
+
+**대리자 코드 예제2**   
+```ruby   
+
+namespace CallbackTestApp
+{
+    delegate int Compare(int a, int b); // a, b 비교 대리자.
+
+    class Program
+    {
+        // 오름차순 a가 b보다 크면 1리턴, 같으면 0리턴, a < b이면 -1리턴
+        static int AscendCompare(int a, int b)
+        {
+            if (a > b) return 1; // a, b를 바꿀것
+            else if (a == b) return 0;
+            else return -1;
+        }
+
+        // 내림차순 비교, a<b이면 1리턴, 같으면 0, a>b -1리턴
+        static int DescendCompare(int a, int b)
+        {
+            if (a < b) return 1; // b와 a를 순서 바꿀것
+            else if (a == b) return 0;
+            else return -1;
+        }
+
+        static void BubbleSort(int[] DataSet, Compare comparer)
+        {
+            int temp = 0;
+            for (int i = 0; i < DataSet.Length; i++)
+            {
+                for (int j = 0; j < DataSet.Length - (i + 1); j++)
+                {
+                    // 비교하여 값 위치변경 Swap
+                    if (comparer(DataSet[j], DataSet[j + 1]) > 0)
+                    {
+                        temp = DataSet[j + 1];
+                        DataSet[j + 1] = DataSet[j];
+                        DataSet[j] = temp;
+                    }
+                }
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            int[] array = { 3, 8, 4, 2, 1, 10 };
+
+            Console.WriteLine("Sorting....");
+            BubbleSort(array, new Compare(DescendCompare)); // 오름(내림)차순 정렬
+            foreach (var item in array)
+            {
+                Console.WriteLine($"{item}");
+            }
+        }
+    }
+}   
+```   
+
+#### (3) Delegate {익명 메소드}   
+
+```ruby   
+namespace DelegateChainApp
+{
+    delegate void AllCalc(int x, int y); //대리자 선언
+    class Program
+    {
+        static void Plus (int a, int b) { Console.WriteLine($"a + b = {a+b}"); }
+        static void Minus(int a, int b) { Console.WriteLine($"a - b = {a - b}"); }
+        static void Multiple(int a, int b) { Console.WriteLine($"a * b = {a * b}"); }
+        static void Divide(int a, int b) { Console.WriteLine($"a / b = {a / b}"); }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Calculating!");
+            AllCalc allCalc = Plus;
+            allCalc += Minus;
+            allCalc += Multiple;
+            allCalc += Divide;
+
+            allCalc(10, 5);
+
+            /*Plus(10, 5);
+            Minus(10, 5);
+            Multiple(10, 5);
+            Divide(10, 5);*/
+
+            Console.WriteLine("뺄셈 메서드 제거");
+            allCalc -= Minus;
+            allCalc(10, 5);
+        }
+    }
+}   
+```   
+
+#### (4) 이벤트   
+
++ 이벤트 : 객체에서 일어난 사건 알리기   
+   + 어떤 일이 생겼을 때 알려주는 객체를 만들 때 사용   
+   + 이벤트 사용 절차   
+      + 대리자 선언
+      + 선언한 대리자 인스턴스를 event 한정자로 수식   
+      + 이벤트 핸들러 작성   
+      + 클래스 인스턴스 생성 후 객체의 이벤트에 이벤트 핸들러 등록   
+      + 이벤트 발생 및 핸들러 호출   
+
+**이벤트 코드 예제**   
+```ruby   
+namespace UsingEventApp
+{
+    delegate void EventHandler(string message); //메시지 받아서 처리하는 대리자 선언 
+    class CustomNotifier
+    {//이벤트 선언, 사용하는 객체
+        public event EventHandler SomethingHappened;
+
+        public void Dosomething (int number)
+        {
+            int temp = number % 10;
+
+            if (temp != 0 && temp % 3 == 0)
+            {
+                SomethingHappened($"{number} : 짝 !");
+            }
+        }
+    }
+    class Program
+    {
+        //이벤트가 발생했을 때 실행되는 메서드 (이벤트 핸들러)
+        public static void MyHandler (string message)
+        {
+            Console.WriteLine(message);
+        }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("이벤트 사용!");
+            CustomNotifier notifier = new CustomNotifier();
+            notifier.SomethingHappened += new EventHandler(MyHandler);
+
+            for (int i = 0; i <= 100; i++)
+            {
+                notifier.Dosomething(i);
+            }
+        }
+    }
+}   
+```   
+
+---   
+
+### 2-6 LINQ {from, where, orderby, select}   
+
+#### (1) C#언어에 통합된 데이터 질의 기능   
+
+#### (2) 내부 조인과 외부 조인   
++ 각 데이터 원본 특정 필드 값을 비교해 일치하는 데이터끼리 연결   
++ 내부조인 : 교집합   
++ 외부조인 : 기준이 되는 데이터 원본 모두 포함   
+
+**LINQ Code Example**   
+```ruby   
+namespace Chap15App
+{
+    class Profile
+    {
+        public string Name { get; set; }
+        public short Height { get; set; }
+    }
+
+    class Product
+    {
+        public string Title { get; set; }
+        public string Star { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] numbers = { 9, 2, 6, 4, 5, 3, 7, 8, 1, 10 }; // 10개 배열
+            // LINQ안쓰는 방식
+            /*List<int> result = new List<int>();
+            foreach (var item in numbers)
+            {
+                if (item % 2 == 0)
+                {
+                    result.Add(item);
+                }
+            }
+            result.Sort();*/
+            // LINQ쓰는 방식
+            var result = from item in numbers
+                         where item % 2 == 0
+                         orderby item
+                         select item;
+
+            foreach (var item in result)
+            {
+                Console.WriteLine($"짝수 : {item}");
+            }
+
+            List<Profile> profiles = new List<Profile>
+            {
+                new Profile() { Name = "정우성", Height = 186 },
+                new Profile() { Name = "김태희", Height = 158 },
+                new Profile() { Name = "고현정", Height = 172 },
+                new Profile() { Name = "이문세", Height = 178 },
+                new Profile() { Name = "하하", Height = 171 }
+            };
+
+            List<Product> products = new List<Product>
+            { 
+                new Product() { Title = "비트", Star = "정우성" },
+                new Product() { Title = "CF다수", Star = "김태희" },
+                new Product() { Title = "아이리스", Star = "김태희" },
+                new Product() { Title = "모래시계", Star = "고현정" },
+                new Product() { Title = "솔로예찬", Star = "이문세" },
+            };
+
+            var resProfiles = from item in profiles
+                              where item.Height < 175
+                              orderby item.Height ascending /*descending*/
+                              select new
+                              {
+                                  Name = item.Name,
+                                  Height = item.Height,
+                                  InchHeight = item.Height * 0.393
+                              };
+
+            foreach (var item in resProfiles)
+            {
+                Console.WriteLine($"{item.Name}, {item.Height}cm, {item.InchHeight}inch");
+            }
+
+            var resProfiles2 = from item in profiles
+                              where item.Height < 175
+                              orderby item.Height ascending /*descending*/
+                              select item.Height;
+
+            foreach (var item in resProfiles2)
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            // group by
+            var resProfiles3 = from item in profiles
+                               orderby item.Height
+                               group item by item.Height < 175 into g
+                               select new { 
+                                   GroupKey = g.Key, Items = g
+                               };
+
+            foreach (var group in resProfiles3)
+            {
+                Console.WriteLine($"175cm 미만 그룹 : {group.GroupKey}");
+
+                foreach (var item in group.Items)
+                {
+                    Console.WriteLine($"    {item.Name}, {item.Height}cm");
+                }
+            }
+
+            // inner join
+            var joinProfiles = from p in profiles
+                               join d in products
+                               on p.Name equals d.Star
+                               select new
+                               {
+                                   Name = p.Name,
+                                   Work = d.Title,
+                                   InchHeight = p.Height * 0.393
+                               };
+            Console.WriteLine("내부 조인 결과!");
+            foreach (var item in joinProfiles)
+            {
+                Console.WriteLine($"이름:{item.Name}, 작품:{item.Work}, 키:{item.InchHeight}inch");
+            }
+
+            // outer join
+            var joinProfiles2 = from p in profiles
+                               join d in products
+                               on p.Name equals d.Star into ps
+                               from d2 in ps.DefaultIfEmpty(new Product() { Title ="작품없음" })
+                               select new
+                               {
+                                   Name = p.Name,
+                                   Work = d2.Title,
+                                   InchHeight = p.Height * 0.393
+                               };
+            Console.WriteLine("외부 조인 결과!");
+            foreach (var item in joinProfiles2)
+            {
+                Console.WriteLine($"이름:{item.Name}, 작품:{item.Work}, 키:{item.InchHeight}inch");
+            }
+        }
+    }
+}   
+```   
+
+---   
+
+### 2-7) 스레드와 태스크   
+
+#### (1) 프로세스와 스레드   
+
++ 프로세스   
+   + 실행 파일이 실행되어 메모리에 적재된 인스턴스   
+   + 하나 이상의 스레드로 구성   
+
++ 스레드   
+   + 운영체제가 CPU 시간을 할당하는 기본 단위   
+
++ 멀티 스레드의 장점   
+   + 사용자 대화형 프로그램에서 응답성을 높일 수 있음   
+   + 경제성 : 메모리와 자원을 할당하는 비용 절감   
+   + 멀티 프로세스 방식에 비해 멀티 스레드 방식 자원 공유가 쉽다   
+
++ 멀티 스레드의 단점   
+   + 구현하기 까다랍고 테스트가 쉽지 않음   
+   + 과다한 사용 = 성능 저하 야기   
+   + 자식 스레드의 문제 발생 시 전체 프로세스에 영향을 끼침   
+
+**스레드 코드 예제**   
+```ruby   
+
+namespace Chap19App
+{
+    class Program
+    {
+        static void Dosomething()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                Console.WriteLine($"DoSomething : {i}");
+                Thread.Sleep(10); // 1/100초 동안 멈추게함 
+            }
+        }
+        static void SomthingHappened()
+        {
+            for (int i = 0; i < 50; i++)
+            {
+                Console.WriteLine($"DoSomething : {i}");
+                Thread.Sleep(10); // 1/100초 동안 멈추게함 
+            }
+        }
+        static void Main(string[] args)
+        {
+           
+
+            Thread thread = new Thread(new ThreadStart(Dosomething));
+            Thread thread1 = new Thread(SomthingHappened);
+
+            try
+
+            {
+                Console.WriteLine("스레드 시작!");
+                thread.Start();
+                thread1.Start();
+
+                for (int i = 0; i < 50; i++)
+                {
+                    Console.WriteLine($"Main thrad : {i}");
+                    Thread.Sleep(10);
+
+                    if (i == 10)
+                        thread.Abort();
+                }
 
 
+                Console.WriteLine("스레드 종료 대기...");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"예외발생 : {ex.Message}");
+            }
+            finally
+            {
+                thread.Join();
+                thread1.Join();
+
+                Console.WriteLine("프로세스 종료");
+            }
+        }
+    }
+}
+```   
+
+#### (2) 스레드 임의 종료 시키기   
+
++ Thread 객체의 Abort()메소드 사용   
++ 권장하지 않음   
+   + 자원을 독점한 스레드가 해제 못한 상태로 Abort의 희상양이되어짐   
+   + 꼭 해야하는 상황이라면 도중에 강제로 중단해도 프로세스에 영향주지 않는 작업으로 진행   
+
+**스레드 임의 종료 코드 예제**   
+```ruby   
+namespace SideTaskApp
+{
+    class SideTask
+    {
+        int Count { get; set; }
+
+        public SideTask(int count)
+        {
+            this.Count = count;
+        }
+
+        public void CountDown()
+        {
+            try
+            {
+                while (Count > 0)
+                {
+                    Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId} : {Count} 남음");
+                    Count--;
+                    Thread.Sleep(10);
+                }
+                Console.WriteLine($"Count : {Count}"); //결과는 0 
+
+            }
+            catch (ThreadAbortException ex)
+            {
+                Console.WriteLine($"스레드 임의종료 예외발생 : {ex.Message}");
+                Thread.ResetAbort();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"스레드 예외발생 : {ex.Message}");
+            }
+            
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            SideTask task = new SideTask(100);
+            Thread th = new Thread(task.CountDown);
+            th.IsBackground = false; // 이 스레드가 종료되기 전까지는 모든 프로세스가 끝나지 않음
+            // true인 경우, 백그라운드 스레드가 돌고있는 상태에도 메인스레드가 끝나면 백그라운드 스레드도 같이 종료
+            SideTask task2 = new SideTask(200);
+            Thread th2 = new Thread(task2.CountDown); // 기본값 IsBackground false
 
 
+            Console.WriteLine("스레드 시작!");
+            th.Start();
+            th2.Start();
 
-    
-    
+            Thread.Sleep(1000); // 1초 슬립
 
+            Console.WriteLine("인터럽트!");
+            th2.Interrupt(); ; //인터럽트 
+            Console.WriteLine("임의 종료!");
+            //th.Abort();
 
+            Console.WriteLine("종료 대기"); // 카운트다운 중간에 표시
+            th.Join();
+            th2.Join();
 
+            Console.WriteLine("스레드/프로세스 종료!");
+        }
+    }
+}   
+```   
 
+#### (3) 태스크 Task   
 
++ 멀티 코어 시대 고성능 소프트 웨어 개발   
+   + 병렬 처리 기법과 비동기 처리 기법   
 
++ 예제를 통한 이해도 상승 필요   
 
+**태스크 코드 예제**   
+```ruby   
+namespace ThreadStateApp
+{
+    class Program
+    {
+        static void PrintState(ThreadState state)
+        {
+            Console.WriteLine($"{state, 16} : {(int) state}");
+        }
+        static void Main(string[] args)
+        {
+            PrintState(ThreadState.Running);
+            
+            PrintState(ThreadState.StopRequested);
+            PrintState(ThreadState.Stopped);
+            PrintState(ThreadState.SuspendRequested);
+            PrintState(ThreadState.Suspended);
+            PrintState(ThreadState.Unstarted);
+            PrintState(ThreadState.WaitSleepJoin);
+            PrintState(ThreadState.AbortRequested);
+            PrintState(ThreadState.Aborted);
+        }
+    }
+}
+```    
 
+---   
 
+### 2-8 ) C#으로 만드는 Winform   
 
+```
+지금까지 배운 C# 기초와 문법으로 WinForm 윈도우와 Application 을 구현해 나갈 것입니다.   
+생각과 마음의 거리가 먼 만큼 이상을 코드로 화면에 구현해 나가는 것이 어렵습니다.   
+두 지점을 이어주는 다리가 비록 불안전 할지라도 시간을 들여 고쳐나가서 결국에는 두 지점이 마주하게 되면 .   
+앞으로의 밝은 C#을 바라며 Winform 기초 예제를 다루고 마치겠습니다.   
+```   
 
+**Winform Basic FileCopyApp Code**   
+```ruby   
+namespace FileCopyApp
+{
+    static class Program
+    {
+        /// <summary>
+        /// 해당 애플리케이션의 주 진입점입니다.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FrmMain());
+        }
+    }
+}   
+```   
 
-
-
-
-  
-
-
-
-
-
-
-
-
+**<FileCopyApp>**   
+   ![결과 last](/Media/WinformBasic.png "파일 복사 앱")   
+   
 
 
 참조: https://blog.hexabrain.net/128 [끝나지 않는 프로그래밍 일기]
