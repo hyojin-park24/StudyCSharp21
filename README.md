@@ -2808,7 +2808,7 @@ namespace FileCopyApp
 }   
 ```   
 
-**<FileCopyApp>**   
+<FileCopyApp>  
    ![결과 last](/Media/WinformBasic.png "파일 복사 앱")   
    
 ---   
@@ -2816,4 +2816,6 @@ namespace FileCopyApp
 ◎ 참고문서   
 + [끝나지 않는 프로그래밍 일기](https://blog.hexabrain.net/128, "Csharp basic link")   
 + [오버플로우 코드 예제](https://076923.github.io/posts/C-26/, "overflow code Exam link")   
-+ [C# 배우기](https://www.csharpstudy.com/, "csharp study link")
++ [C# 배우기](https://www.csharpstudy.com/, "csharp study link")   
+
+---
