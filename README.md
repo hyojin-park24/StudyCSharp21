@@ -8,7 +8,8 @@
 ```
 ◇ 마이크로 소프트에서 개발된 객체 지향 프로그래밍 언어    
 ◇.NetFramework를 이용하여 프로그래밍하는 대표적인 언어   
-◇ 윈도우 프로그래밍, 웹 프로그래밍, 게임 및 모바일 프로그래밍 등 모든 영역에서 사용되는 범용 프로그래밍 언어   
+◇ 윈도우 프로그래밍, 웹 프로그래밍, 게임 및 모바일 프로그래밍 등
+   모든 영역에서 사용되는 범용 프로그래밍 언어   
 ```   
 
 ### 1-2) C# 데이터 타입   
@@ -124,6 +125,55 @@ namespace ConstTestApp
 MBTI의 ENTJ가 가장 좋아하는 구성이다.
 ```
 
+```ruby
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ArrayListApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ArrayList array = new ArrayList( new[] { 80,74,81,90,34});
+
+            var loc = array.IndexOf(81);
+            array.Insert(loc, 50);
+
+            Console.WriteLine("81위치에 50추가");
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+            Console.WriteLine("90 삭제");
+            loc = array.IndexOf(90);
+
+            array.RemoveAt(4);
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+
+            Console.WriteLine("정렬");
+            array.Sort(); // 정렬
+            foreach (var item in array)
+
+            {
+                Console.WriteLine($"{item}");
+            }
+        }
+    }
+}
+```
+**코드 예제 결과 값**
+
+![결과1](/Media/ArrayTest.png "배열 ")  
 
 
 
