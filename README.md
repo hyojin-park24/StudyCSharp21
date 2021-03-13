@@ -11,6 +11,7 @@
 ◇ 윈도우 프로그래밍, 웹 프로그래밍, 게임 및 모바일 프로그래밍 등
    모든 영역에서 사용되는 범용 프로그래밍 언어   
 ```   
+---
 
 ### 1-2) C# 데이터 타입   
 + bool | True or False   
@@ -27,6 +28,7 @@
 + Object | 모든 타입의 기본 클래스로 모든 유형을 포함 할 수 있음   
 + int.MaxValue, int.MinValue | 최댓값, 최솟값   
 + Null | 값이 아닌 값 "아무리 생각해도 난 NULL을~♬"   
+---
 
 ### 1-3) C#데이터 형식   
 + 기본 데이터 형식
@@ -36,9 +38,17 @@
    + 클래스
    + 배열
 + 값 형식
-+ 참조 형식
++ 참조 형식   
 
-#### (1) 값 형식과 참조 형식   
+#### (1) 기본 데이터 형식
++ 값 형식
+   + 숫자 형식
+   + 논리 형식   
++ 참조 형식
+   + 문자열 형식
+   + 오브젝트 형식
+
+#### (2) 값 형식과 참조 형식   
 + 값 형식 (Stack)
    + 변수에서 값을 담는 형식
 + 참조 형식 (Heap)
@@ -57,11 +67,11 @@
 스택
 ![참조1](/Media/Stack2.png "스택")    
 스택과 힙   
-<img src="https://github.com/hyojin-park24/StudyCSharp21/blob/main/Media/stack%EA%B3%BC%20Heap2.png"/>  
+<img src="https://github.com/hyojin-park24/StudyCSharp21/blob/main/Media/stack%EA%B3%BC%20Heap2.png"/>    
 
+#### (3) 변수 및 상수  
 
-### 1-3) C# 변수 및 상수   
-#### (1) 변수   
+**(3-1) 변수**
 ```   
 변수는 변하는 수이다.    
 조금 더 쉽게 접근하자면 작성자는 이렇게 말하고 싶다.    
@@ -80,14 +90,14 @@
     + bool 
 + 모든 C# 변수의 이름은 대소문자를 구별(case-sensitive)한다.
 
-#### 1-1) 변수 선언 방법   
-**32비트 정수형과 64비트 정수형**   
+#### (3-2) 변수 선언 방법   
+**<32비트 정수형과 64비트 정수형>**   
 ```
 int n; //32비트 정수형
 long sum; // 64비트 정수형   
 ```   
 
-**Hello, World! 문자형**   
+**<Hello, World! 문자형>**   
 ```ruby
 using System;
 
@@ -103,7 +113,7 @@ namespace HelloWorldApp
 }
 ```   
 
-#### (2) 상수  
+#### (3-3) 상수  
 ```ruby
 상수란?
 
@@ -144,7 +154,7 @@ namespace ConstTestApp
 }   
 ```   
 
-#### (2-1) ENUM (열거형)   
+#### (3-4) ENUM (열거형)   
 **열거형이란?**   
 enum은 열거형 상수(constant)를 표현하기 위해 태어났다.   
 enum을 통해 상수 숫자들을 의미있는 단어로 표현이 가능하고, 
@@ -155,7 +165,140 @@ enum을 통해 상수 숫자들을 의미있는 단어로 표현이 가능하고
 + 클래스 안 OR 네임스페이스 안에서만 선언 가능
 + 메서드 OR 속성 안에서 선언    
 
-### 1-6) C# 배열(Array)   
+#### (4) 오버플로우 (OverFlow)와 언더플로우 (Underflow)   
+```ruby
+- 데이터가 흘러 넘쳤을 때: 데이터 형식의 최대값을 넘어가는 데이터를 저장 할 때
+- 언더플로우: 최저 값 보다 작은 데이터를 저장할 때   
+
+namespace OverflowTestApp
+{
+    public partial class Form1_Load : Form
+    {
+        public Form1_Load()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load_Load(object sender, EventArgs e)
+        {
+                int flow = 2147483647;
+                textBox1.Text = Convert.ToString(flow + 1);
+        }
+    }
+}
+
+```
+![참조1](/Media/Overflow.png "오버플로우 예제 결과")   
+
+---
+
+### 1-4) 연산자   
++ 산술 연산자
+   + ' +, -, *, /, % '  
++ 할당 연산자   
+   + ' =, +=, -=, *=, /=, %= '   
++ 증감 연산자   
+   + ' ++, -- '   
++ 논리 연산자   
+   + ' && (And), || (Or), | (Not) '   
++ 관계/비교 연산자   
+   + ' <, >, ==, !=, >=, <= '   
++ 비트 연산자   
+   + ' & (And), | (Or), ^ (XOr) '   
+   + 비트 내에서의 연산   
++ Shift 연산자   
+   + ' >>, << '   
+   + 값을 이동시킬 수 있는 연산   
++ 조건 연산자   
+   + ' ?, ??'   
+
+**<연산자>**   
+
+```ruby
+namespace StringConcatApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("숫자 더하기");
+            var p2 = 456; // 지역 변수로 만듦 [숫자 : int]
+            Console.WriteLine(123+p2); // 579 [int + int] = int
+            Console.WriteLine("123" + p2); // [string + int] = string / 문자열이 하나라도 있으면 문자열 결합으로 바뀜
+            Console.WriteLine($"123{p2}"); // [string] / 위와 결과값 같음 지금 방식이 훨씬 편함 (C# 6.0 이후 문자열 만드는 방법)
+            Console.WriteLine("123" + "456"); //[string + string] / 123456 [문자 : string]
+
+            // 관계연산자
+            int a = 30, b = 30;
+            Console.WriteLine( a > b); //false (true,false 화면 출력시, 대문자로 바뀜)
+            Console.WriteLine(a < b); // false
+            Console.WriteLine( a >= b ); // true
+            Console.WriteLine( a<=b ); //true
+            Console.WriteLine( a == b ); //true
+            Console.WriteLine(a != b); //false ( ! 는 '아니다'는 의미) 
+
+            //논리 연산자
+            Console.WriteLine("논리 연산자");
+            Console.WriteLine( 10 > 9 && a > 0 );//true ('&&' 는 '그리고' 의미)
+            Console.WriteLine( a > b || b > 0); // true ( || 는 '또는' 의미)
+            Console.WriteLine(!(a < b)); //true
+
+            // 조건연산자 단항 if 문을 대체 가능
+            int c = 30;
+            string result = c == 30 ? "삼십" : "삼십아님"; // = > 조건 연산자 써볼게 
+
+            /*string result;
+            if (c == 30)
+                result = "삼십";
+            else
+                result = "삼십아님";*/
+
+            Console.WriteLine(result);
+
+            //병합연산자 (NULL 조건부 연산자)
+
+            Console.WriteLine("NULL 병합연산자");
+            int? d = null;
+            Console.WriteLine($"{d}");
+
+          
+            
+
+        }
+    }
+}
+```
+**<증감연산자>**   
+
+```ruby
+namespace IncDecTestApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("증감연산자 테스트");
+
+            int result = 26;
+            Console.WriteLine($"현재 숫자는 {result}");
+            result += 3;
+            Console.WriteLine($"현재 숫자는 {result}");
+            result -= 10;
+            Console.WriteLine($"현재 숫자는 {result}");
+
+            Console.WriteLine($"현재 숫자는 {result++}");
+            // ++result 와 result++ 랑 값변환 다름으로 위치 중요 (전치증감 / 후치증감)
+            // ++result 는 + 먼저, result++ 는 값 먼저 주고 +를 뒷 작업으로 보냄
+            Console.WriteLine($"전치감소 숫자는 {--result}");
+            Console.WriteLine($"후치감소 숫자는 {result--}");
+        }
+    }
+}
+```
+
+---
+
+### 1-5) 배열(Array)   
 ```
 배열이란?   
 동일한 데이터 타입의 집합이다.   
@@ -218,6 +361,7 @@ namespace ArrayListApp
 
 
 참조: https://blog.hexabrain.net/128 [끝나지 않는 프로그래밍 일기]
+      https://076923.github.io/posts/C-26/[오버플로우 코드 ]
 
 
 
