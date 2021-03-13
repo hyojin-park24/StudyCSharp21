@@ -1682,6 +1682,8 @@ class Program
     }
 ```   
 
+---   
+
 ### 2-4) 프로퍼티 {캡슐화의 프로퍼티}   
 
 #### (1) 프로퍼티란?   
@@ -2064,6 +2066,70 @@ namespace DictionaryApp
     }
 }
 ```   
+
+### 2-5) 예외 처리하기   
+
+#### (1) 예외에 대해   
+
++ 예외 : 개발자가 생각하는 시나리오에서 벗어나는 사건   
++ 예외 처리 : 프로그램의 오류나 다운으로 이어지지 않도록 처리   
+
+#### (2) Try ~ Catch로 예외 받기   
+
++ 발생한 예외를 받아서 처리해줌   
++ 메커니즘   
+   + try절에 실행하고자 했던 코드를 처리   
+   + 예외(if여러개)가 던져지면 catch블록 (여러개)에서 받아서 처리!   
+
+**Try Catch 문 코드 예제**   
+```ruby   
+
+namespace TryCatchApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] arr = { 1, 2, 3 };
+            try
+            {
+                
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.WriteLine($"{i}번째 값 : {arr[i]}");
+                }
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+
+                Console.WriteLine($"예외발생 : {ex.Message}");
+            }
+
+            Console.WriteLine("나머지 일처리 계속...");
+            int x = 108, y = 0;
+            int result = 0;
+
+            try
+            {
+                result = x / y;
+                Console.WriteLine($"결과는 {result}");
+            }
+            catch (DivideByZeroException ex)
+            {
+                Console.WriteLine($"예외발생 : {ex.Message}");
+            }
+            Console.WriteLine(" 또 나머지 일처리 계속...");
+        }
+    }
+}
+```   
+
+#### (3) Throw문 "입벌려, 예외들어간다!"   
+
++ throw문   
+   : 예외를 던지는 방법   
++ 메소드 내에서 예외를 던질 경우, 메소드를 호출한 Try ~ Catch문에서 받음   
+
 
 
 
