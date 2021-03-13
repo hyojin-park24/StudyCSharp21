@@ -2784,7 +2784,51 @@ namespace ThreadStateApp
 ```
 지금까지 배운 C# 기초와 문법으로 WinForm 윈도우와 Application 을 구현해 나갈 것입니다.   
 생각과 마음의 거리가 먼 만큼 이상을 코드로 화면에 구현해 나가는 것이 어렵습니다.   
-두 지점을 이어주는 다리가 비록 불안전 할지라도 시간을 들여 고쳐나가서 결국에는 두 지점이 마주하게 되면 .   
+    }
+
+2777
+
+}
+
+2778
+
+```    
+
+2779
+
+
+
+2780
+
+---   
+
+2781
+
+
+
+2782
+
+### 2-8 ) C#으로 만드는 Winform   
+
+2783
+
+
+
+2784
+
+```
+
+2785
+
+지금까지 배운 C# 기초와 문법으로 WinForm 윈도우와 Application 을 구현해 나갈 것입니다.   
+
+2786
+
+생각과 마음의 거리가 먼 만큼 이상을 코드로 화면에 구현해 나가는 것이 어렵습니다.   
+
+2787
+
+두 지점을 이어주는 다리가 비록 불안전 할지라도 시간을 들여 고쳐나가서 결국에는 두 지점이 마주하게 되면 두 지점을 이어주는 다리가 비록 불안전 할지라도 시간을 들여 고쳐나가서 결국에는 두 지점이 마주하게 되면 됩니다 .   
 앞으로의 밝은 C#을 바라며 Winform 기초 예제를 다루고 마치겠습니다.   
 ```   
 
@@ -2811,12 +2855,9 @@ namespace FileCopyApp
 **<FileCopyApp>**   
    ![결과 last](/Media/WinformBasic.png "파일 복사 앱")   
    
+---   
 
-
-참조: https://blog.hexabrain.net/128 [끝나지 않는 프로그래밍 일기]
-      https://076923.github.io/posts/C-26/[오버플로우 코드 ]
-
-
-
-
-
+◎ 참고문서   
++ [끝나지 않는 프로그래밍 일기](https://blog.hexabrain.net/128, "Csharp basic link")   
++ [오버플로우 코드 예제](https://076923.github.io/posts/C-26/,"overflow code Exam link")   
++ [C# 배우기](https://www.csharpstudy.com/, "csharp study link")
