@@ -30,7 +30,7 @@
 + Null | 값이 아닌 값 "아무리 생각해도 난 NULL을~♬"   
 ---
 
-### 1-3) C#데이터 형식   
+### 1-3) C#데이터 형식 : 데이터 
 + 기본 데이터 형식
 + 변수, 상수, 열거형
 + 복합 데이터 형식
@@ -356,7 +356,275 @@ namespace ArrayListApp
 ```
 **코드 예제 결과 값**
 
-![결과1](/Media/ArrayTest.png "배열 ")  
+![결과1](/Media/ArrayTest.png "배열 ")   
+
+---
+
+### 1-6) 코드 흐름의 제어   
+
+```
+프로그램의 흐름에 따라 제어할 수 있는 코딩이 존재한다   
+```
+
++ 조건문     
++ 반복문   
++ 점프문   
+
+### (1) 조건문 {if, else, switch}   
+
+#### (1-1) if~else문 "만약에~ 그렇지 않으면"   
+```ruby
+namespace Chap05
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.Write("수를 입력하세요 : ");
+                string line = Console.ReadLine(); // 콘솔에서 입력값을 변수에 넣기 (할당)
+
+                if(line == "quit") break; // quit 입력하면 프로그램 종료.
+
+                int number = 0;
+                int.TryParse(line, out number);  //int.Parse(line);
+                //Console.WriteLine(number);
+                //todo 아래 로직을 수정하세요
+                if (number > 0 )
+                {
+                    if (number % 2 == 0)
+                        Console.WriteLine("0보다 큰 짝수");
+                    else
+                        Console.WriteLine("0보다 큰 홀수");
+
+                }
+                else
+                {
+                    Console.WriteLine("0보다 작은 수");
+                }
+                // todo 마지막 
+            }
+
+            Console.WriteLine("계산종료!");
+        }
+    }
+}
+```   
+**if문 결과값**
+![결과2](/Media/IfTestApp.png "if문")    
+
+#### (1-2) switch, Label, Break
+```
+여러개 조건식의 결과를 검사한 후 프로그램의 흐름을 나눔
+```
+
+```ruby
+namespace SwitchTestApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.Write("요일을 입력하세요 : ");
+                string line = Console.ReadLine(); // 콘솔에서 입력값을 변수에 넣기 (할당)
+
+                if (line == "quit") break; // quit 입력하면 프로그램 종료.
+                string day = line;
+
+                /*if ( day == "월요일" )
+                {
+                    Console.WriteLine("월요일 입니다.");
+                }
+                else if (day == "화요일")
+                {
+                    Console.WriteLine("화요일 입니다.");
+                }
+                else if (day == "수요일")
+                {
+                    Console.WriteLine("수요일 입니다.");
+                }
+                else if (day == "목요일")
+                {
+                    Console.WriteLine("목요일 입니다.");
+                }
+                else if (day == "금요일")
+                {
+                    Console.WriteLine("금요일 입니다.");
+                }
+                else if (day == "토요일")
+                {
+                    Console.WriteLine("토요일 입니다.");
+                }
+                else if (day == "일요일")
+                {
+                    Console.WriteLine("일요일 입니다.");
+                }
+                else
+                {
+                    Console.WriteLine("요일이 아닙니다.");
+                }*/
+
+                switch (day)
+                {
+                    case "월요일":
+                        Console.WriteLine("월요일 입니다.");
+                        break;
+                    case "화요일":
+                        Console.WriteLine("화요일 입니다.");
+                        break;
+                    case "수요일":
+                        Console.WriteLine("수요일 입니다.");
+                        break;
+                    case "목요일":
+                        Console.WriteLine("목요일 입니다.");
+                        break;
+                    case "금요일":
+                        Console.WriteLine("금요일 입니다.");
+                        break;
+                    case "토요일":
+                        Console.WriteLine("토요일 입니다.");
+                        break;
+                    case "일요일":
+                        Console.WriteLine("일요일 입니다.");
+                        break;
+                    default:
+                        Console.WriteLine("요일이 아닙니다.");
+                        break;
+                        //if . else if. 문을 switch문으로 바꿀 수 있음 
+                }
+
+                Console.WriteLine("계산종료!");
+            }
+        }
+    }
+}
+```   
+
+**switch문 결과값**
+![결과3](/Media/SwitchTestApp.png "switch문 ")     
+
+### (2) 반복문 {While, do, for, foreach}    
+
+#### (2-1) While문 "값이 참일 때, 동안 반복할거야!"   
++ if문과 마찬가지로 true 또는 false가 반환되어야 함   
++ while문의 특징은 조건식이 참일 때 계속해서 반복하여 코드를 실행함    
++ 조건식이 거짓이 되면 루프를 빠져나옴   
+
+**While문의 기본 형태**
+```   
+while (조건식) 
+{
+   //반복 실행될 코드
+}   
+```   
+
+#### (2-2) do While문 "먼저 한번 실행 후 반복할거야!"   
+```
+do while 문의 주의사항!!   
+조건식을 만족하든 만족하지 않든 반드시 한번은 실행이 됨!
+```   
+
+**do while문의 기본 형태**   
+```
+do 
+{
+   //반복 실행될 코드
+}   
+while 
+(조건식);   
+```   
+
+#### (2-3) For문 "값이 참이될 때 까지 반복할거야!"   
++ while문과 큰 차이점은 없음   
++ for문이 확실히 코딩하기 간편함   
++ 초기식에는 반복을 실행하기 전 사용될 **변수를 초기화** 해야함   
+
+**for문의 기본 형태**   
+```
+for(초기식; 조건식; 증감식;)
+{
+   //반복해서 실행될 코드
+}
+```   
+
+#### (2-4) Foreach 문 "순화하며 차례대로 접근할거야!"   
+
++ 배열이나 컬렉션에서 주로 사용됨   
++ 여러개의 변수를 한 곳에 가져다가 붙인 형태   
+
+**Foreach문의 기본 형태**   
+```
+foreach (변수 in 배열 혹은 컬렉션)
+{
+   //실행될 코드
+}
+```   
+
+**Foreach문 코드 예제**   
+```ruby   
+namespace ForeachTestApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] sources = { 1, 2, 3, 4, 5, 3, 6, 7, 8, 9, 10 };
+
+           //for
+            for (int i = 0; i < sources.Length; i++)
+            {
+                Console.WriteLine($"sources[i] = {sources[i]}");
+            }
+            //foreach
+            Console.WriteLine("Foreach문");
+            var idx = 0;
+            foreach(var item in sources)
+            {
+                Console.WriteLine($"sources = { item}");
+            }
+        }
+    }
+}   
+```   
+
+#### (2-5) 반복문의 중첩 : 구구단    
+
+**for문의 중첩**   
+```
+static void Main(string[] args)
+{ 
+   for (int a = 2; a < 10; a++) 
+      {
+         for (int b = 1; b < 10; b++) 
+            {
+               Console.WriteLine("{0} * {1} = {2}", a, b, a * b);
+            } 
+      }
+}   
+```   
+
+**구구단 결과 값**   
+
+![결과4](/Media/Foreach.png "구구단 ")     
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
 
 
 
